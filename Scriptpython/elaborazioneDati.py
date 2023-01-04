@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
-
-
+import progressbar
+import time
+from tqdm import tqdm
 #prendo dati
 
 tab=pd.read_csv('/home/marco-ubu/esameInquinantiUSA/DatiProgetto/pollution_us_2008_2010.csv')
@@ -16,7 +17,10 @@ O3mean=tab['O3 Mean'].values  #parti per milione
 #=tab[''].values
 #=tab[''].values
 
-#6 california ;36 New york ; 39 ohio; 42 pennsylvania ; 51 Virginia
+#fai funzione per separare stati, giorni
+
+
+# 9 connecticut ; 24 Maryland; 36 New york ; 42 pennsylvania ; 51 Virginia
 
 cStatoNY=np.empty(0)
 cConteaNY=np.empty(0)
@@ -118,4 +122,23 @@ for i in range(len(codStato)):
 
 print(cStatoVA,cConteaVA,nSitVA,O3meanVA)
 print(len(cStatoVA),len(cConteaVA),len(nSitVA),len(O3meanVA))
-        
+
+
+#preparo gli array anche per tutti gli stati
+
+codeStati=np.empty(0)
+codeContee=np.empty(0)
+numSiti=np.empty(0)
+O3meanTot=np.empty(0)
+
+
+for i in range(len(codStato)-1):
+    if(O3mean[i] != O3mean[i+1]):
+        codeStati=np.append(codeStati,codStato[i])
+        codeContee=np.append(codeContee,codContea[i])
+        numSiti=np.append(numSiti,numSito[i])
+        O3meanTot=np.append(O3meanTot,O3mean[i])
+
+print(codeStati,codeContee,numSiti,O3meanTot)
+print(len(codeStati),len(codeContee),len(numSiti),len(O3meanTot))
+
