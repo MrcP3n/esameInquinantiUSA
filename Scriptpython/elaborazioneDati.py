@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 #prendo dati
 
 tab=pd.read_csv('/home/marco-ubu/esameInquinantiUSA/DatiProgetto/pollution_us_2008_2010.csv')
@@ -144,10 +145,12 @@ print(len(codeStati),len(codeContee),len(numSiti),len(O3meanTot))
 
 
 
-
-
-
-
-
-
 #Scrivo su un nuovo file csv
+
+
+#def Scriviarray(array1,array2,array3,array4):
+    #'/home/marco-ubu/esameInquinantiUSA/DatiProgetto/DatiStati.csv'
+
+#s=Scriviarray(codeStati,codeContee,numSiti,O3meanTot)
+#if(s==True):
+#    print('File scritto')
