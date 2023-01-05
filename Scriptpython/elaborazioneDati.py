@@ -1,8 +1,5 @@
 import numpy as np
 import pandas as pd
-import progressbar
-import time
-from tqdm import tqdm
 #prendo dati
 
 tab=pd.read_csv('/home/marco-ubu/esameInquinantiUSA/DatiProgetto/pollution_us_2008_2010.csv')
@@ -19,6 +16,7 @@ O3mean=tab['O3 Mean'].values  #parti per milione
 
 #fai funzione per separare stati, giorni
 
+    
 
 # 9 connecticut ; 24 Maryland; 36 New york ; 42 pennsylvania ; 51 Virginia
 
@@ -29,6 +27,7 @@ O3meanNY=np.empty(0)
 i=1
 
 #Separo i dati di new york e prendo un valore di media al giorno
+
 for i in range(len(codStato)):
     if(codStato[i]==36):
         if(O3mean[i]!=O3mean[i+1]):
@@ -142,3 +141,13 @@ for i in range(len(codStato)-1):
 print(codeStati,codeContee,numSiti,O3meanTot)
 print(len(codeStati),len(codeContee),len(numSiti),len(O3meanTot))
 
+
+
+
+
+
+
+
+
+
+#Scrivo su un nuovo file csv
