@@ -144,7 +144,7 @@ dateTot=np.empty(0)
 O3meanTot=np.empty(0)
 
 
-'''for i in range(len(codStato)-1):
+for i in range(len(codStato)-1):
     if(O3mean[i] != O3mean[i+1]):
         codeStati=np.append(codeStati,codStato[i])
         codeContee=np.append(codeContee,codContea[i])
@@ -153,7 +153,7 @@ O3meanTot=np.empty(0)
         O3meanTot=np.append(O3meanTot,O3mean[i])
 
 print(codeStati,codeContee,numSiti, dateTot,O3meanTot)
-print(len(codeStati),len(codeContee),len(numSiti),len(O3meanTot),len( dateTot))'''
+print(len(codeStati),len(codeContee),len(numSiti),len(O3meanTot),len( dateTot))
 
 def Scriviarr(arr1,arr2,arr3,arr4,arr5,path):
     j=1
@@ -164,13 +164,56 @@ def Scriviarr(arr1,arr2,arr3,arr4,arr5,path):
 
     return True        
 
+#file Stati
+
+#file MD
+
+#/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiNY.csv
+Stati=Scriviarr(codeStati,codeContee,numSiti,dateTot,O3meanTot,'/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiStati.csv')
+if(Stati==True):
+    print('File Stati scritto')
+
+
+
+
+
+
 #file NY
 
 #/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiNY.csv
-#pathNY='/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiNY.csv'
 NY=Scriviarr(cStatoNY,cConteaNY,nSitNY,dateNY,O3meanNY,'/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiNY.csv')
 if(NY==True):
     print('File NY scritto')
 
-#Fai il resto degli stati !!!!!!!!!
+#file Pen
 
+#/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiNY.csv
+Pen=Scriviarr(cStatoPen,cConteaPen,nSitPen,datePen,O3meanPen,'/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiPen.csv')
+if(Pen==True):
+    print('File Pen scritto')
+
+    
+#file CT
+
+#/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiNY.csv
+CT=Scriviarr(cStatoCT,cConteaCT,nSitCT,dateCT,O3meanCT,'/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiCT.csv')
+if(CT==True):
+    print('File CT scritto')
+
+
+
+#file VA
+
+#/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiNY.csv
+VA=Scriviarr(cStatoVA,cConteaVA,nSitVA,dateVA,O3meanVA,'/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiVA.csv')
+if(VA==True):
+    print('File VA scritto')
+
+
+
+#file MD
+
+#/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiNY.csv
+MD=Scriviarr(cStatoMD,cConteaMD,nSitMD,dateMD,O3meanMD,'/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiMD.csv')
+if(MD==True):
+    print('File MD scritto')    
