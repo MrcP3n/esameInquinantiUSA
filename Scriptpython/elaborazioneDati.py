@@ -166,8 +166,6 @@ def Scriviarr(arr1,arr2,arr3,arr4,arr5,path):
 
 #file Stati
 
-#file MD
-
 #/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiNY.csv
 Stati=Scriviarr(codeStati,codeContee,numSiti,dateTot,O3meanTot,'/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiStati.csv')
 if(Stati==True):
