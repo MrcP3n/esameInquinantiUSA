@@ -155,7 +155,8 @@ for i in range(len(codStato)-1):
 print(codeStati,codeContee,numSiti, dateTot,O3meanTot)
 print(len(codeStati),len(codeContee),len(numSiti),len(O3meanTot),len( dateTot))
 
-def Scriviarr(arr1,arr2,arr3,arr4,arr5,path):
+
+'''def Scriviarr(arr1,arr2,arr3,arr4,arr5,path):
     j=1
     with open(path,'w',newline='') as file:
         writer=csv.writer(file)
@@ -163,9 +164,68 @@ def Scriviarr(arr1,arr2,arr3,arr4,arr5,path):
             writer.writerow([arr1[j],arr2[j],arr3[j],arr4[j],arr5[j]])
 
     return True        
+'''
+
+#creo dataframe e scrivo un file csv per NY 
+
+
+def creaDataFrame(arr1,arr2,arr3,arr4,arr5,Names):
+    nomiColonne = {Names[0]:arr1,Names[1]:arr2,Names[2]:arr3,Names[3]:arr4,Names[4]:arr5}
+    mid_term_marks_df = pd.DataFrame(nomiColonne)
+    return mid_term_marks_df
+
+NYcolumns=(["cStatoNY","cConteaNY","nSitNY","dateNY","O3meanNY"])
+dfNY=creaDataFrame(cStatoNY,cConteaNY,nSitNY,dateNY,O3meanNY,NYcolumns)
+print(dfNY)
+
+dfNY.to_csv("datiNY.csv")
+
+
+#creo dataframe e scrivo un file csv per VA 
+
+VAcolumns=(["cStatoVA","cConteaVA","nSitVA","dateVA","O3meanVA"])
+dfVA=creaDataFrame(cStatoVA,cConteaVA,nSitVA,dateVA,O3meanVA,VAcolumns)
+print(dfVA)
+
+dfVA.to_csv("datiVA.csv")
+
+#creo dataframe e scrivo un file csv per Pen 
+
+Pencolumns=(["cStatoPen","cConteaPen","nSitPen","datePen","O3meanPen"])
+dfPen=creaDataFrame(cStatoPen,cConteaPen,nSitPen,datePen,O3meanPen,Pencolumns)
+print(dfPen)
+
+dfPen.to_csv("datiPen.csv")
+
+#creo dataframe e scrivo un file csv per CT
+
+CTcolumns=(["cStatoCT","cConteaCT","nSitCT","dateCT","O3meanCT"])
+dfCT=creaDataFrame(cStatoCT,cConteaCT,nSitCT,dateCT,O3meanCT,CTcolumns)
+print(dfCT)
+
+dfCT.to_csv("datiCT.csv")
+
+#creo dataframe e scrivo un file csv per MD
+
+MDcolumns=(["cStatoMD","cConteaMD","nSitMD","dateMD","O3meanMD"])
+dfMD=creaDataFrame(cStatoMD,cConteaMD,nSitMD,dateMD,O3meanMD,MDcolumns)
+print(dfMD)
+
+dfMD.to_csv("datiMD.csv")
+
+#creo dataframe e scrivo un file csv per MD
+
+statiColumns=(["cStati","cContea","nSit","dateTot","O3meanTot"])
+dfstati=creaDataFrame(codeStati,codeContee,numSiti,dateTot,O3meanTot,statiColumns)
+print(dfstati)
+
+dfstati.to_csv("datiStati.csv")
+
+
+
 
 #file Stati
-
+'''
 #/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiNY.csv
 Stati=Scriviarr(codeStati,codeContee,numSiti,dateTot,O3meanTot,'/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiStati.csv')
 if(Stati==True):
@@ -215,3 +275,4 @@ if(VA==True):
 MD=Scriviarr(cStatoMD,cConteaMD,nSitMD,dateMD,O3meanMD,'/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiMD.csv')
 if(MD==True):
     print('File MD scritto')    
+'''
