@@ -1,7 +1,7 @@
+import sys
 import numpy as np
 
-
-class Stazione:
+class rilevazione:
 
     #classe che definisce stazione
     
@@ -13,18 +13,30 @@ class Stazione:
         self.mean=mean
 
     def  __eq__(self,other):
-        return self.cStaz==other.cStaz
+        return self.data==other.data
 
-    def __lt(self,other):
-        return self.cStaz < other.cStaz
+    def __lt__(self,other):
+        return self.data< other.data
+
+#    def __lt__(self,other):
+ #      return self.cStaz< other.cStaz
     
-
     def __gt__(self,other):
-        return self.cStaz > other.cStaz
+        return self.data > other.data
 
     def __ne__(self,other):
-        return self.cStaz != other.cStaz
+        return self.data != other.data
 
 
+class stazione():
 
-    
+
+    def __init__(self):
+        
+        self.arrRil = np.empty(0)
+        
+
+
+    def addril(self,r): 
+        self.arrRil = np.append(self.arrRil,r)
+        
