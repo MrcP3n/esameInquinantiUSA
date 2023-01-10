@@ -25,7 +25,7 @@ class rilevazione:
         return self.data > other.data
 
     def __ne__(self,other):
-        return self.data != other.data
+        return self.cStaz != other.cStaz
 
 
 class stazione():
@@ -36,7 +36,8 @@ class stazione():
         self.arrRil = np.empty(0)
         
 
-
-    def addril(self,r): 
+        
+    def addril(self,r):
+        
         self.arrRil = np.append(self.arrRil,r)
         
