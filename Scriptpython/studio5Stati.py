@@ -88,51 +88,56 @@ ril5Stati=getRilevaz(p5stati)
 
 
 ril5Stati.sort(kind='mergesort')
-print(ril5Stati)
+#print(ril5Stati)
 
     
 for h in ril5Stati:
     print(h.cStato, h.cContea, h.cStaz, h.data, h.mean)
 print('Numero totale di rilevazioni:', ril5Stati.size)
 
-ardata=np.array([h.data for h in ril5Stati])
-armean=np.array([h.mean for h in ril5Stati])
+#ardata=np.array([h.data for h in ril5Stati])
+#armean=np.array([h.mean for h in ril5Stati])
 
 #grafico andamento O3 al variare del tempo per tutte le stazioni 
+#plt.title('Array medie in funzione del tempo')
+#plt.plot(ardata , armean, marker='o' ,color='midnightblue')
+#plt.show()
 
-plt.plot(ardata , armean, marker='o' ,color='midnightblue')
-plt.show()
-
-def getStazioni(arRil):
-    '''
+def getStazioniStato(arRil):
+  '''  
     Funzione che crea un array di Stazione.stazioni a partire da un array ordinato di Stazione.rilevaz (arrRil)
     
     Due Stazioni consecutive, staz1 e staz2, sono raggruppati nello stesso evento (Event) se:
        h.cStaz==j.cStaz
-   
+   '''
 
-    stazioni = np.empty(0)
-    for h in arRil:
-        codePrec = arRil[0].cStaz
-        if h.cStaz==arRil[0].cStaz :
-            stazioni = np.append( stazioni, Stazione.stazione() )
-            
-        stazioni[-1].addril(h)
-        codePrec = h.cStaz
+  stazioni = np.empty(0)
+  codePrec = arRil[0].cStaz
+  stazioni=np.append(stazioni,Stazione.stazione())
+  for h in arRil:
+      if h.cStaz != codePrec :
+          stazioni = np.append( stazioni, Stazione.stazione() )
+         # i=i+1
+      else:
+          stazioni[-1].addril(h)
+          codePrec = h.cStaz
+  return stazioni
+
 '''
- '''   stazioni= np.empty(0)
-    for i in range(arRil.size):
-        z=1
-        for z in range((arRil.size -1)):
-            if(arRil[i].cStaz!=arRil[z].cStaz):
-                stazioni[-1].addril(z)
-            else:
-                 stazioni=np.append(stazioni,Stazione.stazione())'''
-    return stazioni
+  stazioni= np.empty(0)
+  for i in range(arRil.size):
+      z=1
+      for z in range((arRil.size -1)):
+          if(arRil[i].cStaz!=arRil[z].cStaz):
+              stazioni[-1].addril(z)
+          else:
+              stazioni=np.append(stazioni,Stazione.stazione())
+                 '''
 
 
-staz5Stati=getStazioni(ril5Stati)
-print('Numero totale di stazioni: ', staz5Stati.size)   
+
+staz5Stati=getStazioniStato(ril5Stati)
+print('Numero totale di stazioni: ', staz5Stati.size)  
 '''
 #trasformata di fourier e freq
 

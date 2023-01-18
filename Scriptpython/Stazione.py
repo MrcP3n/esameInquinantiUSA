@@ -3,7 +3,7 @@ import numpy as np
 
 class rilevazione:
 
-    #classe che definisce stazione
+    #classe che definisce rilevazione
     
     def __init__(self,cStato,cContea,cStaz,data,mean):
         self.cStato=cStato
@@ -16,20 +16,18 @@ class rilevazione:
         return self.data==other.data
 
     def __lt__(self,other):
-        return self.data< other.data
-
-#    def __lt__(self,other):
- #      return self.cStaz< other.cStaz
+        return self.cStaz < other.cStaz 
     
     def __gt__(self,other):
         return self.data > other.data
 
-    def __ne__(self,other):
-        return self.cStaz != other.cStaz
+  #  def __ne__(self,other):
+   #     return self.cStaz != other.cStaz
 
 
 class stazione():
 
+    #classe che definisce una stazione singola con rilevazioni
 
     def __init__(self):
         
@@ -38,6 +36,11 @@ class stazione():
 
         
     def addril(self,r):
-        
         self.arrRil = np.append(self.arrRil,r)
+
+
+
+#class Stato():
+
+    #classe che definisce uno Stato con stazioni
         
