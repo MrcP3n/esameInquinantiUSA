@@ -30,13 +30,21 @@ class stazione():
     #classe che definisce una stazione singola con rilevazioni
 
     def __init__(self):
-        
+        self.nril = 0
         self.arrRil = np.empty(0)
-        
 
-        
+    #def __eq__(self,other):
+     #   return
+
+    #def __lt__(self,other):
+    #    return
+
+   # def __gt__(self,other):
+   #     return 
+
     def addril(self,r):
         self.arrRil = np.append(self.arrRil,r)
+        self.nril = self.arrRil.size
 
 
 

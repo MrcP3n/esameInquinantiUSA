@@ -103,24 +103,26 @@ print('Numero totale di rilevazioni:', ril5Stati.size)
 #plt.plot(ardata , armean, marker='o' ,color='midnightblue')
 #plt.show()
 
-def getStazioniStato(arRil):
+def getStazioni(arRil):
   '''  
     Funzione che crea un array di Stazione.stazioni a partire da un array ordinato di Stazione.rilevaz (arrRil)
     
     Due Stazioni consecutive, staz1 e staz2, sono raggruppati nello stesso evento (Event) se:
        h.cStaz==j.cStaz
+ or h.cStato!= codePrecStato
    '''
 
   stazioni = np.empty(0)
-  codePrec = arRil[0].cStaz
+  codePrecStaz = arRil[0].cStaz
+  codePrecStato = arRil[0].cStato
   stazioni=np.append(stazioni,Stazione.stazione())
   for h in arRil:
-      if h.cStaz != codePrec :
+      if (h.cStaz != codePrecStaz) :
           stazioni = np.append( stazioni, Stazione.stazione() )
-         # i=i+1
-      else:
-          stazioni[-1].addril(h)
-          codePrec = h.cStaz
+
+      codePrecStaz = h.cStaz
+      codePrecStato = h.cStato   
+      stazioni[-1].addril(h)    
   return stazioni
 
 '''
@@ -132,12 +134,23 @@ def getStazioniStato(arRil):
               stazioni[-1].addril(z)
           else:
               stazioni=np.append(stazioni,Stazione.stazione())
-                 '''
+                '''
+i=0
+cPrStaz=ril5Stati[0].cStaz
+for h in ril5Stati:
+    if(h.cStaz != cPrStaz):
+        i=i+1
+        cPrStaz=h.cStaz
 
+print(i)
 
-
-staz5Stati=getStazioniStato(ril5Stati)
+staz5Stati=getStazioni(ril5Stati)
 print('Numero totale di stazioni: ', staz5Stati.size)  
+#print(staz5Stati)
+for hh in staz5Stati[25].arrRil:
+    print(hh.cStato, hh.cContea , hh.cStaz, hh.data ,hh.mean ,staz5Stati[0])
+
+
 '''
 #trasformata di fourier e freq
 
