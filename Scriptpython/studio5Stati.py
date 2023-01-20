@@ -6,57 +6,7 @@ import scipy.optimize as opt
 from scipy import constants , fft
 from scipy import stats
 
-'''
-tabNY=pd.read_csv('/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiNY.csv')
-cStatoNY=tabNY['cStatoNY'].values
-cConteaNY=tabNY['cConteaNY'].values
-nSitNY=tabNY['nSitNY'].values
-dateNY=tabNY['dateNY'].values
-O3meanNY=tabNY['O3meanNY'].values
 
-tabVA=pd.read_csv('/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiVA.csv')
-cStatoVA=tabVA['cStatoVA'].values
-cConteaVA=tabVA['cConteaVA'].values
-nSitVA=tabVA['nSitVA'].values
-dateVA=tabVA['dateVA'].values
-O3meanVA=tabVA['O3meanVA'].values
-
-tabCT=pd.read_csv('/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiCT.csv')
-cStatoCT=tabCT['cStatoCT'].values
-cConteaCT=tabCT['cConteaCT'].values
-nSitCT=tabCT['nSitCT'].values
-dateCT=tabCT['dateCT'].values
-O3meanCT=tabCT['O3meanCT'].values
-
-tabMD=pd.read_csv('/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiMD.csv')
-cStatoMD=tabMD['cStatoMD'].values
-cConteaMD=tabMD['cConteaMD'].values
-nSitMD=tabMD['nSitMD'].values
-dateMD=tabMD['dateMD'].values
-O3meanMD=tabMD['O3meanMD'].values
-
-tabPen=pd.read_csv('/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiPen.csv')
-cStatoPen=tabPen['cStatoPen'].values
-cConteaPen=tabPen['cConteaPen'].values
-nSitPen=tabPen['nSitPen'].values
-datePen=tabPen['datePen'].values
-O3meanPen=tabPen['O3meanPen'].values
-
-tabStati=pd.read_csv('/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiStati.csv')
-cStatoStati=tabStati['cStati'].values
-cConteaStati=tabStati['cContea'].values
-nSitStati=tabStati['nSit'].values
-dateStati=tabStati['dateTot'].values
-O3meanStati=tabStati['O3meanTot'].values
-
-
-
-NY='/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiNY.csv'
-MD='/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiMD.csv'
-CT='/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiCT.csv'
-VA='/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiVA.csv'
-Pen='/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiPen.csv'
-'''
 
 p5stati='/home/marco-ubu/esameInquinantiUSA/DatiProgetto/dati5Stati.csv'
 
@@ -70,21 +20,9 @@ def getRilevaz(path):
     return staz
 
 
-'''
-stazNy = getStazione(NY)
-stazVA  =  getStazione(VA)
-stazCT =  getStazione(CT)
-stazPen =  getStazione(Pen)
-stazMD =  getStazione(MD)
-
-print(stazNY)
-
-hits = np.concatenate( (hitsM0, hitsM1, hitsM2, hitsM3) )
-'''
 
 ril5Stati=getRilevaz(p5stati)
-#np.sort(hits, kind='mergesort' )
-#np.sort(stazNY, kind='mergesort')
+
 
 
 ril5Stati.sort(kind='mergesort')
@@ -95,13 +33,7 @@ for h in ril5Stati:
     print(h.cStato, h.cContea, h.cStaz, h.data, h.mean)
 print('Numero totale di rilevazioni:', ril5Stati.size)
 
-#ardata=np.array([h.data for h in ril5Stati])
-#armean=np.array([h.mean for h in ril5Stati])
 
-#grafico andamento O3 al variare del tempo per tutte le stazioni 
-#plt.title('Array medie in funzione del tempo')
-#plt.plot(ardata , armean, marker='o' ,color='midnightblue')
-#plt.show()
 
 def getStazioni(arRil):
   '''  

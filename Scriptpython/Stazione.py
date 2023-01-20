@@ -34,14 +34,10 @@ class stazione():
         self.nril = 0
         self.arrRil = np.empty(0)
 
-    #def __eq__(self,other):
-     #   return
-
     #def __lt__(self,other):
     #    return
 
-   # def __gt__(self,other):
-   #     return 
+    
 
     def addril(self,r):
         self.arrRil = np.append(self.arrRil,r)
