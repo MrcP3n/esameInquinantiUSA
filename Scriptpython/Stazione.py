@@ -15,8 +15,9 @@ class rilevazione:
     def  __eq__(self,other):
         return self.data==other.data
 
+    #definisco <, serve per ordinare nel seguente modo sennò vari problemi con estrazione di stazioni 
     def __lt__(self,other):
-        return self.cStaz < other.cStaz 
+        return (self.cStaz+self.cStato+self.cContea) <  (other.cStaz+other.cStato+other.cContea) 
     
     def __gt__(self,other):
         return self.data > other.data

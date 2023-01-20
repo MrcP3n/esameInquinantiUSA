@@ -107,47 +107,36 @@ def getStazioni(arRil):
   '''  
     Funzione che crea un array di Stazione.stazioni a partire da un array ordinato di Stazione.rilevaz (arrRil)
     
-    Due Stazioni consecutive, staz1 e staz2, sono raggruppati nello stesso evento (Event) se:
-       h.cStaz==j.cStaz
- or h.cStato!= codePrecStato
+    Due rilevazioni in stesso luogo, ril1 e ril2, sono raggruppati nella stessa stazione se:
+       ril1.cStaz!=ril2.cStaz
+inoltre per evitare che rilevazione con lo stesso codice di stazione ma presa in luoghi differenti finiscano insieme a causa della ripetizioni di questi codici in luoghi differenti si aggiunge la seguente condizione:
+       codeTest!=codePrecStatoContea
+  che controlla che le due rilevazioni abbiano la somma tra codice di contea e stato diversi  
    '''
 
   stazioni = np.empty(0)
   codePrecStaz = arRil[0].cStaz
-  codePrecStato = arRil[0].cStato
+  codePrecStatoContea = arRil[0].cStato+ arRil[0].cContea
   stazioni=np.append(stazioni,Stazione.stazione())
   for h in arRil:
-      if (h.cStaz != codePrecStaz) :
+      codeTest=h.cContea+h.cStato
+      if (h.cStaz != codePrecStaz ) :
           stazioni = np.append( stazioni, Stazione.stazione() )
-
-      codePrecStaz = h.cStaz
-      codePrecStato = h.cStato   
+      elif(codeTest!=codePrecStatoContea):
+          stazioni = np.append( stazioni, Stazione.stazione() )
+          
+      codePrecStatoContea = codeTest    
+      codePrecStaz = h.cStaz   
       stazioni[-1].addril(h)    
   return stazioni
 
-'''
-  stazioni= np.empty(0)
-  for i in range(arRil.size):
-      z=1
-      for z in range((arRil.size -1)):
-          if(arRil[i].cStaz!=arRil[z].cStaz):
-              stazioni[-1].addril(z)
-          else:
-              stazioni=np.append(stazioni,Stazione.stazione())
-                '''
-i=0
-cPrStaz=ril5Stati[0].cStaz
-for h in ril5Stati:
-    if(h.cStaz != cPrStaz):
-        i=i+1
-        cPrStaz=h.cStaz
 
-print(i)
+
 
 staz5Stati=getStazioni(ril5Stati)
 print('Numero totale di stazioni: ', staz5Stati.size)  
 #print(staz5Stati)
-for hh in staz5Stati[25].arrRil:
+for hh in staz5Stati[0].arrRil:
     print(hh.cStato, hh.cContea , hh.cStaz, hh.data ,hh.mean ,staz5Stati[0])
 
 
