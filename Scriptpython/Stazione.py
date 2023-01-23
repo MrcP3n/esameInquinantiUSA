@@ -22,8 +22,6 @@ class rilevazione:
     def __gt__(self,other):
         return self.data > other.data
 
-  #  def __ne__(self,other):
-   #     return self.cStaz != other.cStaz
 
 
 class stazione():
@@ -33,15 +31,20 @@ class stazione():
     def __init__(self):
         self.nril = 0
         self.arrRil = np.empty(0)
+        self.cStateo = 0
 
-    #def __lt__(self,other):
-    #    return
+    #Utile per capire come analizzare le varie stazioni,visto che so quante stazioni ha ogni stato vedendo i dati
+    
+    def __lt__(self,other):
+        return self.cStato < other.cStato
 
     
 
     def addril(self,r):
         self.arrRil = np.append(self.arrRil,r)
         self.nril = self.arrRil.size
+        cStato=int(r.cStato)
+        self.cStato = cStato
 
 
 

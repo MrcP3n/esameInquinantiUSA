@@ -25,6 +25,9 @@ O3mean=tab['O3 Mean'].values  #parti per milione
 
 #preparo gli array anche per tutti gli stati
 
+#condizione O3mean[i] != O3mean[i+1] non va bene ci sono stazioni che hanno più medie giornaliere
+
+
 codeStati=np.empty(0)
 codeContee=np.empty(0)
 numSiti=np.empty(0)
@@ -33,7 +36,7 @@ O3meanTot=np.empty(0)
 
 
 for i in range(len(codStato)-1):
-    if(O3mean[i] != O3mean[i+1]):
+    if(date[i] != date[i+1]):
         codeStati=np.append(codeStati,codStato[i])
         codeContee=np.append(codeContee,codContea[i])
         numSiti=np.append(numSiti,numSito[i])
@@ -55,7 +58,7 @@ O3mean5Stati=np.empty(0)
 
 for i in range(len(codStato)-1):
     if(codStato[i]==51 or codStato[i]==36 or codStato[i]==9 or codStato[i]==24 or codStato[i]==42):
-        if(O3mean[i] != O3mean[i+1]):
+        if(date[i] != date[i+1]):
             code5Stati=np.append(code5Stati,codStato[i])
             codeContee5=np.append(codeContee5,codContea[i])
             numSiti5=np.append(numSiti5,numSito[i])
