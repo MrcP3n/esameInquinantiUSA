@@ -69,7 +69,7 @@ staz5Stati=getStazioni(ril5Stati)
 staz5Stati.sort(kind='mergesort')
 
 print('Numero totale di stazioni: ', staz5Stati.size)  
-for hh in staz5Stati[7].arrRil:
+for hh in staz5Stati[3].arrRil:
     print(hh.cStato, hh.cContea , hh.cStaz, hh.data ,hh.mean)
     
 
@@ -78,12 +78,18 @@ for i in range(35):
     print('nRilevazioni', staz5Stati[i].nril)
 
 
-#estraggo array stazioni con funzione 
+#estraggo array stazioni con funzione e andamenti temporali
 
 stazCT2Date ,stazCT2Mean  = f.takeArr(staz5Stati[2])
 stazCT3Date ,stazCT3Mean = f.takeArr(staz5Stati[3])
 title='Confronto 2 stazioni Connecticut'
 f.graphInTime(stazCT2Date ,stazCT2Mean,stazCT3Date ,stazCT3Mean,title)
+
+stazNY8Date , stazNY8Mean =f.takeArr(staz5Stati[8])
+stazNY9Date , stazNY9Mean =f.takeArr(staz5Stati[9])
+title1='Confronto 2 stazioni New York'
+f.graphInTime(stazNY8Date ,stazNY8Mean,stazNY9Date ,stazNY9Mean ,title1)
+
 
 
 #print(stazCT2Mean , stazCT2Date)
