@@ -76,15 +76,27 @@ for hh in staz5Stati[7].arrRil:
 for i in range(35):
     print('-----Stazione{:}------'.format(i))
     print('nRilevazioni', staz5Stati[i].nril)
-    
-#estraggo array stazioni
 
+
+#estraggo array stazioni con funzione 
+
+stazCT2Date ,stazCT2Mean  = f.takeArr(staz5Stati[2])
+stazCT3Date ,stazCT3Mean = f.takeArr(staz5Stati[3])
+title='Confronto 2 stazioni Connecticut'
+f.graphInTime(stazCT2Date ,stazCT2Mean,stazCT3Date ,stazCT3Mean,title)
+
+
+#print(stazCT2Mean , stazCT2Date)
+#print(len(stazCT2Mean) , len(stazCT2Date))
     
 #Andamenti Temporali
 
 
 
 #trasformata di fourier e freq
+
+
+
 
 
 '''
