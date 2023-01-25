@@ -93,7 +93,7 @@ print(df5stati)
 
 df5stati.to_csv("dati5Stati.csv")
 
-
+print(O3mean[120],O3mean[119],O3mean[123])
 '''
 NYcolumns=(["cStatoNY","cConteaNY","nSitNY","dateNY","O3meanNY"])
 dfNY=creaDataFrame(cStatoNY,cConteaNY,nSitNY,dateNY,O3meanNY,NYcolumns)
