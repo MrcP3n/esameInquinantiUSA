@@ -34,7 +34,7 @@ def graphInTime2(arrx1,arry1,arrx2,arry2,title,cl):
     return
 
 def graphInTime5(arrx1,arry1,arrx2,arry2,arrx3,arry3, arrx4,arry4,arrx5,arry5,title):
-    fig, (ax1, ax2 ,ax3 ,ax4 , ax5) = plt.subplots(5)
+    fig, (ax1,ax2,ax3,ax4,ax5) = plt.subplots(5)
     fig.suptitle(title)
     ax1.plot(arrx1, arry1, color='red')
     ax2.plot(arrx2, arry2, color='limegreen')
@@ -65,35 +65,51 @@ def graphInTime5(arrx1,arry1,arrx2,arry2,arrx3,arry3, arrx4,arry4,arrx5,arry5,ti
     
 
 def trFour_freq(arrMean):
-    sNyqu=0.5
-    cofft=fft.fft(arrMean)
-    cofFreq=sNyqu*fft.fftfreq(len(cofft) , d=1)
-    return cofft , cofFreq
+    #sNyqu=0.5
+    cofft=fft.rfft(arrMean)
+    cofFreq=fft.rfftfreq(len(cofft) , d=1)
+    cofrshift = fft.fftshift(cofFreq)
+    copsshift = fft.fftshift(cofft)
+    return copsshift , cofrshift
 
 #METTI APPOSTO DIMENSIONI
-def graphSpettri5(afreq1,acof1,afreq2,acof2,afreq3,acof3,afreq4,acof4,afreq5,acof5,title):
-    fig, (ax1, ax2 ,ax3 ,ax4 , ax5) = plt.subplots(5)
+
+def graphSpettri5(acof1,afreq1,acof2,afreq2,acof3,afreq3,acof4,afreq4,acof5,afreq5,title):
+    fig, (ax1,ax2,ax3,ax4,ax5) = plt.subplots(5)
     fig.suptitle(title)
-    ax1.plot(afreq1[:int(acof1.size/2)],np.absolute(acof1[:int(acof1.size/2)])**2,'o', markersize=3 ,color='red')
-    ax1.set_xscale('log')
-    ax1.set_yscale('log')
-    ax2.plot(afreq2[:int(acof2.size/2)],np.absolute(acof2[:int(acof2.size/2)])**2,'o', markersize=3 ,color='limegreen')
-    ax2.set_xscale('log')
-    ax2.set_yscale('log')
-    ax3.plot(afreq3[:int(acof3.size/2)],np.absolute(acof3[:int(acof3.size/2)])**2,'o', markersize=3 ,color='cyan')
-    ax3.set_xscale('log')
-    ax3.set_yscale('log')
+    ax1.plot(afreq1[:int(acof1.size/2)],np.absolute(acof1[:int(acof1.size/2)])**2,color='red')
+    #ax[0,0].set_xscale('log')
+    #ax[0,0].set_yscale('log')
+    ax2.plot(afreq2[:int(acof2.size/2)],np.absolute(acof2[:int(acof2.size/2)])**2,color='limegreen')
+    #ax[0,1].set_xscale('log')
+    #ax[0,1].set_yscale('log')
+    ax3.plot(afreq3[:int(acof3.size/2)],np.absolute(acof3[:int(acof3.size/2)])**2,color='cyan')
+    #ax[0,2].set_xscale('log')
+    #ax[0,2].set_yscale('log')
     ax3.set_ylabel('Coefficenti') #Migliora
-    ax4.plot(afreq4[:int(acof4.size/2)],np.absolute(acof4[:int(acof4.size/2)])**2,'o', markersize=3 ,color='midnightblue')
-    ax4.set_xscale('log')
-    ax4.set_yscale('log')
-    ax5.plot(afreq5[:int(acof5.size/2)],np.absolute(acof5[:int(acof5.size/2)])**2,'o', markersize=3 ,color='orchid')
-    ax5.set_xscale('log')
-    ax5.set_yscale('log')
+    ax4.plot(afreq4[:int(acof4.size/2)],np.absolute(acof4[:int(acof4.size/2)])**2,color='midnightblue')
+    #ax[1,0].set_xscale('log')
+    #ax[1,0].set_yscale('log')
+    ax5.plot(afreq5[:int(acof5.size/2)],np.absolute(acof5[:int(acof5.size/2)])**2,color='orchid')
+    #ax[1,1].set_xscale('log')
+    #ax[1,1].set_yscale('log')
     ax5.set_xlabel('Frequenze')
+    fig.set_figheight(7)
+    fig.set_figwidth(10)
     plt.show()
 
     return
+'''
+def graphSpettri5(acof1,afreq1,acof2,afreq2,acof3,afreq3,acof4,afreq4,acof5,afreq5,title):
+    plt.title(title)
+    plt.plot(afreq1[:int(acof1.size/2)],np.absolute(acof1[:int(acof1.size/2)])**2,color='red')
+    plt.plot(afreq2[:int(acof2.size/2)],np.absolute(acof2[:int(acof2.size/2)])**2,color='limegreen')
+    plt.plot(afreq3[:int(acof3.size/2)],np.absolute(acof3[:int(acof3.size/2)])**2,color='cyan')
+    plt.plot(afreq4[:int(acof4.size/2)],np.absolute(acof4[:int(acof4.size/2)])**2,color='midnightblue')
+    plt.plot(afreq5[:int(acof5.size/2)],np.absolute(acof5[:int(acof5.size/2)])**2,color='orchid')
+    plt.xlabel('Frequenze')
+    plt.ylabel('Coefficenti')
+    plt.show()
 
-
-
+    return
+'''

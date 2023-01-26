@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 import Stazione
 import matplotlib.pyplot as plt
-import scipy.optimize as opt
 from scipy import constants , fft
 import Funzioni as f
 
@@ -14,15 +13,12 @@ def getRilevaz(path):
 
     #Funzione legge file e restituisce array di stazioni
     df=pd.read_csv(path)
-    
     staz = np.array([Stazione.rilevazione( r['c5Stati'], r['cContea5'], r['nSit5'],r['date5Stati'],r['O3mean5Stati'] ) for i, r in df.iterrows() ])
 
     return staz
 
 
-
 ril5Stati=getRilevaz(p5stati)
-
 
 
 ril5Stati.sort(kind='mergesort')
