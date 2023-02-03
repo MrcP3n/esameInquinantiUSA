@@ -70,7 +70,9 @@ def trFour_freq(arrMean):
     cofFreq=fft.rfftfreq(len(cofft) , d=1)
     cofrshift = fft.fftshift(cofFreq)
     copsshift = fft.fftshift(cofft)
-    return copsshift , cofrshift
+    mod = np.absolute(copsshift)**2
+    maxi = np.argmax(mod[1:copsshift.size//2])+1
+    return copsshift , cofrshift , maxi
 
 #METTI APPOSTO DIMENSIONI
 

@@ -13,6 +13,7 @@ def getRilevaz(path):
 
     #Funzione legge file e restituisce array di stazioni
     df=pd.read_csv(path)
+    #df['date5Stati']=pd.to_datetime(df['date5Stati'], format = '%Y-%m-%d')
     staz = np.array([Stazione.rilevazione( r['c5Stati'], r['cContea5'], r['nSit5'],r['date5Stati'],r['O3mean5Stati'] ) for i, r in df.iterrows() ])
 
     return staz
@@ -118,23 +119,23 @@ if False:
 
 
 #trasformata di fourier e freq 2 3 5 8 9 13 15 20 24 29 31 33 34
-coffCT1 , cofFreqCT1 = f.trFour_freq(stazCT1Mean)
-coffCT2 , cofFreqCT2 = f.trFour_freq(stazCT2Mean)
-coffCT3 , cofFreqCT3 = f.trFour_freq(stazCT3Mean)
-coffMD5 , cofFreqMD5 = f.trFour_freq(stazMD5Mean)
-coffNY8 , cofFreqNY8 = f.trFour_freq(stazNY8Mean)
-coffNY9 , cofFreqNY9 = f.trFour_freq(stazNY9Mean)
-coffPA13 , cofFreqPA13 = f.trFour_freq(stazPA13Mean)
-coffPA15 , cofFreqPA15 = f.trFour_freq(stazPA15Mean)
-coffPA20 , cofFreqPA20 = f.trFour_freq(stazPA20Mean)
-coffPA24 , cofFreqPA24 = f.trFour_freq(stazPA24Mean)
-coffVA29 , cofFreqVA29 = f.trFour_freq(stazVA29Mean)
-coffVA31 , cofFreqVA31 = f.trFour_freq(stazVA31Mean)
-coffVA33 , cofFreqVA33 = f.trFour_freq(stazVA33Mean)
-coffVA34 , cofFreqVA34 = f.trFour_freq(stazVA34Mean)
+coffCT1 , cofFreqCT1 , maxCT1 = f.trFour_freq(stazCT1Mean)
+coffCT2 , cofFreqCT2 , maxCT2 = f.trFour_freq(stazCT2Mean)
+coffCT3 , cofFreqCT3 , maxCT3 = f.trFour_freq(stazCT3Mean)
+coffMD5 , cofFreqMD5 , maxMD5 = f.trFour_freq(stazMD5Mean)
+coffNY8 , cofFreqNY8 , maxNY8 = f.trFour_freq(stazNY8Mean)
+coffNY9 , cofFreqNY9 , maxNY9 = f.trFour_freq(stazNY9Mean)
+coffPA13 , cofFreqPA13 , maxPA13 = f.trFour_freq(stazPA13Mean)
+coffPA15 , cofFreqPA15 , maxPA15 = f.trFour_freq(stazPA15Mean)
+coffPA20 , cofFreqPA20 , maxPA20 = f.trFour_freq(stazPA20Mean)
+coffPA24 , cofFreqPA24 , maxPA24 = f.trFour_freq(stazPA24Mean)
+coffVA29 , cofFreqVA29 , maxVA29 = f.trFour_freq(stazVA29Mean)
+coffVA31 , cofFreqVA31 , maxVA31 = f.trFour_freq(stazVA31Mean)
+coffVA33 , cofFreqVA33 , maxVA33 = f.trFour_freq(stazVA33Mean)
+coffVA34 , cofFreqVA34 , maxVA34 = f.trFour_freq(stazVA34Mean)
+print(coffCT1,cofFreqCT1,maxCT1)
 
-
-if True:
+if False:
     title1='Spettro di potenza dei 5 stati contigui'
     f.graphSpettri5(coffCT1 , cofFreqCT1,coffMD5 , cofFreqMD5,coffNY9 , cofFreqNY9,coffPA20 , cofFreqPA20, coffVA31 , cofFreqVA31,title1)
 
