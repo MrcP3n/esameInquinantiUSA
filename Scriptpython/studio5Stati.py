@@ -133,25 +133,25 @@ coffVA29 , cofFreqVA29 , maxVA29 = f.trFour_freq(stazVA29Mean)
 coffVA31 , cofFreqVA31 , maxVA31 = f.trFour_freq(stazVA31Mean)
 coffVA33 , cofFreqVA33 , maxVA33 = f.trFour_freq(stazVA33Mean)
 coffVA34 , cofFreqVA34 , maxVA34 = f.trFour_freq(stazVA34Mean)
-print(coffCT1,cofFreqCT1,maxCT1)
+
+modcofCT1 = np.absolute(coffCT1)**2
+modcofMD5 = np.absolute(coffMD5)**2
+modcofNY9 = np.absolute(coffNY9)**2
+modcofPA20 = np.absolute(coffPA20)**2
+modcofVA31 = np.absolute(coffVA31)**2
 
 if False:
-    title1='Spettro di potenza dei 5 stati contigui'
-    f.graphSpettri5(coffCT1 , cofFreqCT1,coffMD5 , cofFreqMD5,coffNY9 , cofFreqNY9,coffPA20 , cofFreqPA20, coffVA31 , cofFreqVA31,title1)
+    print('Stazione CT: Massimo PS: {:f} - Freq {:f} - Periodo: {:f}'.format(modcofCT1[maxCT1], cofFreqCT1[maxCT1], 1/cofFreqCT1[maxCT1]))
+    print('Stazione MD: Massimo PS: {:f} - Freq {:f} - Periodo: {:f}'.format(modcofMD5[maxMD5], cofFreqMD5[maxMD5], 1/cofFreqMD5[maxMD5]))
+    print('Stazione NY: Massimo PS: {:f} - Freq {:f} - Periodo: {:f}'.format(modcofNY9[maxNY9], cofFreqNY9[maxNY9], 1/cofFreqNY9[maxNY9]))
+    print('Stazione PA: Massimo PS: {:f} - Freq {:f} - Periodo: {:f}'.format(modcofPA20[maxPA20], cofFreqPA20[maxPA20], 1/cofFreqPA20[maxPA20]))
+    print('Stazione VA: Massimo PS: {:f} - Freq {:f} - Periodo: {:f}'.format(modcofVA31[maxVA31], cofFreqVA31[maxVA31], 1/cofFreqVA31[maxVA31]))
 
-'''
-#grafico spettro in funz freq
+if True:
+    title='Spettro di potenza dei 5 stati contigui in funzione della frequenza'
+    f.graphSpettri5(coffCT1 , cofFreqCT1,coffMD5 , cofFreqMD5,coffNY9 , cofFreqNY9,coffPA20 , cofFreqPA20, coffVA31 , cofFreqVA31,title)
+    title='Spettro di potenza dei 5 stati contigui in funzione del periodo'
+    f.graphSpettri5Per(coffCT1 , cofFreqCT1,coffMD5 , cofFreqMD5,coffNY9 , cofFreqNY9,coffPA20 , cofFreqPA20, coffVA31 , cofFreqVA31,title)
 
-plt.plot(cofFreq[:int(cofft.size/2)],np.absolute(cofft[:int(cofft.size/2)])**2,'o', markersize=3)
-plt.xscale('log')
-plt.yscale('log')
-plt.show()
 
-#grafico spettro in funz di periodo
-
-plt.plot(1/cofFreq[:int(cofft.size/2)],np.absolute(cofft[0:int(cofft.size/2)])**2,'o' ,markersize=3)
-plt.xscale('log')
-plt.yscale('log')
-plt.show()
-'''
 

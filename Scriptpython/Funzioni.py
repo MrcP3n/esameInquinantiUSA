@@ -69,26 +69,27 @@ def trFour_freq(arrMean):
     cofft=fft.rfft(arrMean)
     cofFreq=fft.rfftfreq(len(cofft) , d=1)
     cofrshift = fft.fftshift(cofFreq)
-    copsshift = fft.fftshift(cofft)
-    mod = np.absolute(copsshift)**2
-    maxi = np.argmax(mod[1:copsshift.size//2])+1
-    return copsshift , cofrshift , maxi
+    cofftshift = fft.fftshift(cofft)
+    mod = np.absolute(cofftshift)**2
+    maxi = np.argmax(mod[1:cofftshift.size//2])+1
+    return cofftshift , cofrshift , maxi
 
-#METTI APPOSTO DIMENSIONI
+#METTI apposto quello zero finale
+#METTI apposto quello zero finale
 
 def graphSpettri5(acof1,afreq1,acof2,afreq2,acof3,afreq3,acof4,afreq4,acof5,afreq5,title):
     fig, (ax1,ax2,ax3,ax4,ax5) = plt.subplots(5)
     fig.suptitle(title)
     ax1.plot(afreq1[:int(acof1.size/2)],np.absolute(acof1[:int(acof1.size/2)])**2,color='red')
-    #ax[0,0].set_xscale('log')
-    #ax[0,0].set_yscale('log')
+    #ax1.set_xscale('log')
+    #ax1.set_yscale('log')
     ax2.plot(afreq2[:int(acof2.size/2)],np.absolute(acof2[:int(acof2.size/2)])**2,color='limegreen')
     #ax[0,1].set_xscale('log')
     #ax[0,1].set_yscale('log')
     ax3.plot(afreq3[:int(acof3.size/2)],np.absolute(acof3[:int(acof3.size/2)])**2,color='cyan')
     #ax[0,2].set_xscale('log')
     #ax[0,2].set_yscale('log')
-    ax3.set_ylabel('Coefficenti') #Migliora
+    ax3.set_ylabel('$|c_{FFT}|^2$ [$\mu g^2/m^6$]') #Migliora
     ax4.plot(afreq4[:int(acof4.size/2)],np.absolute(acof4[:int(acof4.size/2)])**2,color='midnightblue')
     #ax[1,0].set_xscale('log')
     #ax[1,0].set_yscale('log')
@@ -101,6 +102,23 @@ def graphSpettri5(acof1,afreq1,acof2,afreq2,acof3,afreq3,acof4,afreq4,acof5,afre
     plt.show()
 
     return
+
+def graphSpettri5Per(acof1,afreq1,acof2,afreq2,acof3,afreq3,acof4,afreq4,acof5,afreq5,title):
+    fig, (ax1,ax2,ax3,ax4,ax5) = plt.subplots(5)
+    fig.suptitle(title)
+    ax1.plot(1/afreq1[:int(acof1.size/2)],np.absolute(acof1[:int(acof1.size/2)])**2,color='red')
+    ax2.plot(1/afreq2[:int(acof2.size/2)],np.absolute(acof2[:int(acof2.size/2)])**2,color='limegreen')
+    ax3.plot(1/afreq3[:int(acof3.size/2)],np.absolute(acof3[:int(acof3.size/2)])**2,color='cyan')
+    ax3.set_ylabel('$|c_{FFT}|^2$ [$\mu g^2/m^6$]')
+    ax4.plot(1/afreq4[:int(acof4.size/2)],np.absolute(acof4[:int(acof4.size/2)])**2,color='midnightblue')
+    ax5.plot(1/afreq5[:int(acof5.size/2)],np.absolute(acof5[:int(acof5.size/2)])**2,color='orchid')
+    ax5.set_xlabel('Periodi')
+    fig.set_figheight(7)
+    fig.set_figwidth(10)
+    plt.show()
+
+    return
+
 '''
 def graphSpettri5(acof1,afreq1,acof2,afreq2,acof3,afreq3,acof4,afreq4,acof5,afreq5,title):
     plt.title(title)
