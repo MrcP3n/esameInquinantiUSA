@@ -21,11 +21,9 @@ def getRilevaz(path):
 
 ril5Stati=getRilevaz(p5stati)
 
-
 ril5Stati.sort(kind='mergesort')
 #print(ril5Stati)
 
-    
 for h in ril5Stati:
     print(h.cStato, h.cContea, h.cStaz, h.data, h.mean)
 print('Numero totale di rilevazioni:', ril5Stati.size)
@@ -58,8 +56,6 @@ inoltre per evitare che rilevazione con lo stesso codice di stazione ma presa in
       codePrecStaz = h.cStaz   
       stazioni[-1].addril(h)    
   return stazioni
-
-
 
 
 staz5Stati=getStazioni(ril5Stati)
@@ -106,7 +102,7 @@ stazMD5Date , stazMD5Mean =f.takeArr(staz5Stati[5])
 stazNY9Date , stazNY9Mean =f.takeArr(staz5Stati[9])
 title7='Confronto stazione Maryland con stazione New york'
 title8='Confronto 5 Stazioni degli stati contigui'
-if False:
+if False: 
     f.graphInTime2(stazCT2Date ,stazCT2Mean,stazCT3Date ,stazCT3Mean,title1,'red')
     f.graphInTime2(stazNY8Date ,stazNY8Mean,stazNY9Date ,stazNY9Mean ,title2,'cyan')
     f.graphInTime2(stazVA29Date ,stazVA29Mean, stazVA33Date ,stazVA33Mean,title3,'orchid')
@@ -140,18 +136,19 @@ modcofNY9 = np.absolute(coffNY9)**2
 modcofPA20 = np.absolute(coffPA20)**2
 modcofVA31 = np.absolute(coffVA31)**2
 
-if False:
-    print('Stazione CT: Massimo PS: {:f} - Freq {:f} - Periodo: {:f}'.format(modcofCT1[maxCT1], cofFreqCT1[maxCT1], 1/cofFreqCT1[maxCT1]))
-    print('Stazione MD: Massimo PS: {:f} - Freq {:f} - Periodo: {:f}'.format(modcofMD5[maxMD5], cofFreqMD5[maxMD5], 1/cofFreqMD5[maxMD5]))
-    print('Stazione NY: Massimo PS: {:f} - Freq {:f} - Periodo: {:f}'.format(modcofNY9[maxNY9], cofFreqNY9[maxNY9], 1/cofFreqNY9[maxNY9]))
-    print('Stazione PA: Massimo PS: {:f} - Freq {:f} - Periodo: {:f}'.format(modcofPA20[maxPA20], cofFreqPA20[maxPA20], 1/cofFreqPA20[maxPA20]))
-    print('Stazione VA: Massimo PS: {:f} - Freq {:f} - Periodo: {:f}'.format(modcofVA31[maxVA31], cofFreqVA31[maxVA31], 1/cofFreqVA31[maxVA31]))
-
 if True:
+    print('Stazione CT: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(modcofCT1[maxCT1], cofFreqCT1[maxCT1], 1/cofFreqCT1[maxCT1]))
+    print('Stazione MD: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(modcofMD5[maxMD5], cofFreqMD5[maxMD5], 1/cofFreqMD5[maxMD5]))
+    print('Stazione NY: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(modcofNY9[maxNY9], cofFreqNY9[maxNY9], 1/cofFreqNY9[maxNY9]))
+    print('Stazione PA: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(modcofPA20[maxPA20], cofFreqPA20[maxPA20], 1/cofFreqPA20[maxPA20]))
+    print('Stazione VA: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(modcofVA31[maxVA31], cofFreqVA31[maxVA31], 1/cofFreqVA31[maxVA31]))
+
+if False:
     title='Spettro di potenza dei 5 stati contigui in funzione della frequenza'
     f.graphSpettri5(coffCT1 , cofFreqCT1,coffMD5 , cofFreqMD5,coffNY9 , cofFreqNY9,coffPA20 , cofFreqPA20, coffVA31 , cofFreqVA31,title)
     title='Spettro di potenza dei 5 stati contigui in funzione del periodo'
     f.graphSpettri5Per(coffCT1 , cofFreqCT1,coffMD5 , cofFreqMD5,coffNY9 , cofFreqNY9,coffPA20 , cofFreqPA20, coffVA31 , cofFreqVA31,title)
+    
 
 
 

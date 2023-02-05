@@ -48,7 +48,22 @@ class stazione():
 
 
 
-#class Stato():
-
+class Stato():
     #classe che definisce uno Stato con stazioni
+        def __init__(self):
+
+    #Utile per capire come analizzare le varie stazioni,visto che so quante stazioni ha ogni stato vedendo i dati
+    
+    def __lt__(self,other):
+        return self. < other.
+
+    
+    
+    def addril(self,s):
+        '''
+        self.arrRil = np.append(self.arrRil,r)
+        self.nril = self.arrRil.size
+        cStato=int(r.cStato)
+        self.cStato = cStato
+        '''
         
