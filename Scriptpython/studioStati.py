@@ -1,6 +1,44 @@
 import numpy as np
 import pandas as pd
-import Stazione
+import Classi
 import matplotlib.pyplot as plt
 from scipy import constants , fft
 import Funzioni as f
+
+pstati='/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiStati.csv'
+
+rilStati=f.getRilevaz(pstati)
+
+rilStati.sort(kind='mergesort')
+#print(ril5Stati)
+'''
+for h in rilStati:
+    print(h.cStato, h.cContea, h.cStaz, h.data, h.mean)
+'''
+print('Numero totale di rilevazioni:', rilStati.size)
+
+stazStati=f.getStazioni(rilStati)
+stazStati.sort(kind='mergesort')
+
+
+for hh in stazStati[0].arrRil:
+    print(hh.cStato, hh.cContea , hh.cStaz, hh.data ,hh.mean)
+'''
+for i in range(141):
+    print('-----Stazione{:}------'.format(i))
+    print('nRilevazioni', stazStati[i].nril)
+'''
+print('Numero totale di stazioni: ', stazStati.size)
+
+stati=f.getStati(stazStati)
+print('Numero totale di stati: ',stati.size)
+
+for hhh in stati[0].arrStaz:
+    print(hhh.cStato)
+
+for i in range(34):
+    print('-----Stato{:}------'.format(i))
+    print('nStaz', stati[i].nStaz)
+
+
+

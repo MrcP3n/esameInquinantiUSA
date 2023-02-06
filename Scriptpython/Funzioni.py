@@ -3,7 +3,65 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from matplotlib.ticker import (MultipleLocator,AutoMinorLocator)
+import Classi
 
+
+def getRilevaz5(path):
+
+    #Funzione legge file e restituisce array di stazioni
+    df=pd.read_csv(path)
+    #df['date5Stati']=pd.to_datetime(df['date5Stati'], format = '%Y-%m-%d')
+    staz = np.array([Classi.rilevazione( r['c5Stati'], r['cContea5'], r['nSit5'],r['date5Stati'],r['O3mean5Stati'] ) for i, r in df.iterrows() ])
+
+    return staz
+
+def getRilevaz(path):
+    #Funzione legge file e restituisce array di stazioni
+    df=pd.read_csv(path)
+    #df['date5Stati']=pd.to_datetime(df['date5Stati'], format = '%Y-%m-%d')
+    staz = np.array([Classi.rilevazione( r['cStati'], r['cContea'], r['nSit'],r['dateTot'],r['O3meanTot'] ) for i, r in df.iterrows() ])
+
+    return staz
+
+
+def getStazioni(arRil):
+  '''  
+    Funzione che crea un array di Stazione.stazioni a partire da un array ordinato di Stazione.rilevaz (arrRil)
+    
+    Due rilevazioni in stesso luogo, ril1 e ril2, sono raggruppati nella stessa stazione se:
+       ril1.cStaz!=ril2.cStaz
+inoltre per evitare che rilevazione con lo stesso codice di stazione ma presa in luoghi differenti finiscano insieme a causa della ripetizioni di questi codici in luoghi differenti si aggiunge la seguente condizione:
+       codeTest!=codePrecStatoContea
+  che controlla che le due rilevazioni abbiano la somma tra codice di contea e stato diversi  
+   '''
+
+  stazioni = np.empty(0)
+  codePrecStaz = arRil[0].cStaz
+  codePrecStatoContea = arRil[0].cStato+ arRil[0].cContea
+  stazioni=np.append(stazioni,Classi.stazione())
+  for h in arRil:
+      codeTest=h.cContea+h.cStato
+      if (h.cStaz != codePrecStaz ) :
+          stazioni = np.append( stazioni, Classi.stazione() )
+      elif(codeTest!=codePrecStatoContea):
+          stazioni = np.append( stazioni, Classi.stazione() )
+          
+      codePrecStatoContea = codeTest    
+      codePrecStaz = h.cStaz   
+      stazioni[-1].addril(h)    
+  return stazioni
+
+def getStati(arStaz):
+    stati = np.empty(0)
+    codePrecStato = arStaz[0].cStato
+    stati=np.append(stati,Classi.stato())
+    for h in arStaz: 
+        if(h.cStato!=codePrecStato):
+            stati = np.append( stati, Classi.stato() )
+            
+        codePrecStato = h.cStato     
+        stati[-1].addStaz(h)    
+    return stati
 
 def takeArr(staz):
     average = np.empty(0)

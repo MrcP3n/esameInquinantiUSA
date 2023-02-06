@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-import Stazione
+import Classi
 import matplotlib.pyplot as plt
 from scipy import constants , fft
 import Funzioni as f
@@ -9,17 +9,7 @@ import Funzioni as f
 
 p5stati='/home/marco-ubu/esameInquinantiUSA/DatiProgetto/dati5Stati.csv'
 
-def getRilevaz(path):
-
-    #Funzione legge file e restituisce array di stazioni
-    df=pd.read_csv(path)
-    #df['date5Stati']=pd.to_datetime(df['date5Stati'], format = '%Y-%m-%d')
-    staz = np.array([Stazione.rilevazione( r['c5Stati'], r['cContea5'], r['nSit5'],r['date5Stati'],r['O3mean5Stati'] ) for i, r in df.iterrows() ])
-
-    return staz
-
-
-ril5Stati=getRilevaz(p5stati)
+ril5Stati=f.getRilevaz5(p5stati)
 
 ril5Stati.sort(kind='mergesort')
 #print(ril5Stati)
@@ -28,40 +18,11 @@ for h in ril5Stati:
     print(h.cStato, h.cContea, h.cStaz, h.data, h.mean)
 print('Numero totale di rilevazioni:', ril5Stati.size)
 
-
-
-def getStazioni(arRil):
-  '''  
-    Funzione che crea un array di Stazione.stazioni a partire da un array ordinato di Stazione.rilevaz (arrRil)
-    
-    Due rilevazioni in stesso luogo, ril1 e ril2, sono raggruppati nella stessa stazione se:
-       ril1.cStaz!=ril2.cStaz
-inoltre per evitare che rilevazione con lo stesso codice di stazione ma presa in luoghi differenti finiscano insieme a causa della ripetizioni di questi codici in luoghi differenti si aggiunge la seguente condizione:
-       codeTest!=codePrecStatoContea
-  che controlla che le due rilevazioni abbiano la somma tra codice di contea e stato diversi  
-   '''
-
-  stazioni = np.empty(0)
-  codePrecStaz = arRil[0].cStaz
-  codePrecStatoContea = arRil[0].cStato+ arRil[0].cContea
-  stazioni=np.append(stazioni,Stazione.stazione())
-  for h in arRil:
-      codeTest=h.cContea+h.cStato
-      if (h.cStaz != codePrecStaz ) :
-          stazioni = np.append( stazioni, Stazione.stazione() )
-      elif(codeTest!=codePrecStatoContea):
-          stazioni = np.append( stazioni, Stazione.stazione() )
-          
-      codePrecStatoContea = codeTest    
-      codePrecStaz = h.cStaz   
-      stazioni[-1].addril(h)    
-  return stazioni
-
-
-staz5Stati=getStazioni(ril5Stati)
+staz5Stati=f.getStazioni(ril5Stati)
 staz5Stati.sort(kind='mergesort')
 
-print('Numero totale di stazioni: ', staz5Stati.size)  
+print('--------------------------------')
+print('Numero totale di stazioni: ', staz5Stati.size)
 for hh in staz5Stati[3].arrRil:
     print(hh.cStato, hh.cContea , hh.cStaz, hh.data ,hh.mean)
     
@@ -69,6 +30,7 @@ for hh in staz5Stati[3].arrRil:
 for i in range(35):
     print('-----Stazione{:}------'.format(i))
     print('nRilevazioni', staz5Stati[i].nril)
+print('Numero totale di stazioni: ', staz5Stati.size)  
 
 
 #estraggo array stazioni con funzione e andamenti temporali
@@ -102,7 +64,7 @@ stazMD5Date , stazMD5Mean =f.takeArr(staz5Stati[5])
 stazNY9Date , stazNY9Mean =f.takeArr(staz5Stati[9])
 title7='Confronto stazione Maryland con stazione New york'
 title8='Confronto 5 Stazioni degli stati contigui'
-if False: 
+if True: 
     f.graphInTime2(stazCT2Date ,stazCT2Mean,stazCT3Date ,stazCT3Mean,title1,'red')
     f.graphInTime2(stazNY8Date ,stazNY8Mean,stazNY9Date ,stazNY9Mean ,title2,'cyan')
     f.graphInTime2(stazVA29Date ,stazVA29Mean, stazVA33Date ,stazVA33Mean,title3,'orchid')
@@ -143,7 +105,7 @@ if True:
     print('Stazione PA: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(modcofPA20[maxPA20], cofFreqPA20[maxPA20], 1/cofFreqPA20[maxPA20]))
     print('Stazione VA: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(modcofVA31[maxVA31], cofFreqVA31[maxVA31], 1/cofFreqVA31[maxVA31]))
 
-if False:
+if True:
     title='Spettro di potenza dei 5 stati contigui in funzione della frequenza'
     f.graphSpettri5(coffCT1 , cofFreqCT1,coffMD5 , cofFreqMD5,coffNY9 , cofFreqNY9,coffPA20 , cofFreqPA20, coffVA31 , cofFreqVA31,title)
     title='Spettro di potenza dei 5 stati contigui in funzione del periodo'
