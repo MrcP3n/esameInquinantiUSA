@@ -34,8 +34,6 @@ class stazione():
         self.nril = 0
         self.arrRil = np.empty(0)
         self.cStato = 0
-        self.data = np.empty(0)
-        self.mean = np.empty(0)
 
     #Utile per capire come analizzare le varie stazioni,visto che so quante stazioni ha ogni stato vedendo i dati
     
@@ -43,38 +41,52 @@ class stazione():
         return self.cStato < other.cStato
 
     
-
     def addril(self,r):
         self.arrRil = np.append(self.arrRil,r)
         self.nril = self.arrRil.size
         cStato=int(r.cStato)
         self.cStato = cStato
-        #ogni volta che metti un ril vuoi mettere una data e una media corrispondenti 
-        '''
-        data=r.data
-        self.data = data
-        mean=r.mean
-        self.mean = mean
-        '''
+          
 
-
-
-class stato():
-    #classe che definisce uno Stato con stazioni
-    def __init__(self):
-        self.nStaz = 0
-        self.arrStaz = np.empty(0)
         
 
-    #Utile per capire come analizzare le varie stazioni,visto che so quante stazioni ha ogni stato vedendo i dati
+class rilStat():
+    def __init__(self,cStato,cContea,cStaz,data,mean):
+        self.cStato=cStato
+        self.cContea=cContea
+        self.cStaz=cStaz
+        self.data=data
+        self.mean=mean
+
+    def  __eq__(self,other):
+        return self.data==other.data
+ 
+    def __lt__(self,other):
+        return self.data   < other.data   
+    
+    def __gt__(self,other):
+        return self.data > other.data
+
+    
+
+class stato():
+    #classe che definisce uno Stato con rilevazioni
+    
+    def __init__(self):
+        self.nStaz = 0
+        self.arrRil = np.empty(0)
+        self.nril = 0
+        
     
     def __lt__(self,other):
         return self.cStato < other.cStato
 
     
     
-    def addStaz(self,s):
-        self.arrStaz = np.append(self.arrStaz,s)
-        self.nStaz = self.arrStaz.size
-         
-        
+    def addRil(self,r):
+        self.arrRil = np.append(self.arrRil,r)
+        self.nril = self.arrRil.size
+        cStato=int(r.cStato)
+        self.cStato = cStato
+
+   

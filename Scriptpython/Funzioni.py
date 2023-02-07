@@ -19,14 +19,14 @@ def getRilevaz(path):
     #Funzione legge file e restituisce array di stazioni
     df=pd.read_csv(path)
     #df['date5Stati']=pd.to_datetime(df['date5Stati'], format = '%Y-%m-%d')
-    staz = np.array([Classi.rilevazione( r['cStati'], r['cContea'], r['nSit'],r['dateTot'],r['O3meanTot'] ) for i, r in df.iterrows() ])
+    staz = np.array([Classi.rilStat( r['cStati'], r['cContea'], r['nSit'],r['dateTot'],r['O3meanTot'] ) for i, r in df.iterrows() ])
 
     return staz
 
 
 def getStazioni(arRil):
   '''  
-    Funzione che crea un array di Stazione.stazioni a partire da un array ordinato di Stazione.rilevaz (arrRil)
+    Funzione che crea un array di Classi.stazioni a partire da un array ordinato di Classi.rilevaz (arrRil)
     
     Due rilevazioni in stesso luogo, ril1 e ril2, sono raggruppati nella stessa stazione se:
        ril1.cStaz!=ril2.cStaz
@@ -51,17 +51,6 @@ inoltre per evitare che rilevazione con lo stesso codice di stazione ma presa in
       stazioni[-1].addril(h)    
   return stazioni
 
-def getStati(arStaz):
-    stati = np.empty(0)
-    codePrecStato = arStaz[0].cStato
-    stati=np.append(stati,Classi.stato())
-    for h in arStaz: 
-        if(h.cStato!=codePrecStato):
-            stati = np.append( stati, Classi.stato() )
-            
-        codePrecStato = h.cStato     
-        stati[-1].addStaz(h)    
-    return stati
 
 def takeArr(staz):
     average = np.empty(0)
@@ -71,6 +60,58 @@ def takeArr(staz):
         date = np.append(date ,h.data)
         
     return date , average   
+
+def getStati(arRil):
+    '''
+     Funzione che crea un array di Classi.stati a partire da un array ordinato di Classi.rilevaz (arrRil)
+    
+    Due rilevazioni nello stesso stato, ril1 e ril2, sono raggruppati nella stessa stazione se:
+       ril1.cStato==ril2.cStato
+inoltre per evitare che si crei a ogni cambio di anno un nuovo stato che corrisponderebbe ad uno già esistente introduco un array che avrà i codici degli stati esistenti, così facendo aggiungendo la condizione  
+   h.cStati in arrCod
+riesco ad aggiungere le rilevazioni nel giusto stato facendo scorrere gli indici dell' array creato
+    '''
+    stati = np.empty(0)
+    arrCod = np.empty(0)
+    codePrecStato = arRil[0].cStato
+    arrCod =np.append(arrCod,arRil[0].cStato)
+    stati=np.append(stati,Classi.stato())
+    for h in arRil:
+        if(h.cStato!=codePrecStato):
+            present=h.cStato in arrCod
+            if(present==False):
+                stati=np.append(stati,Classi.stato())
+                arrCod=np.append(arrCod,h.cStato)
+            else:
+                for i in range(len(arrCod)):
+                    if(h.cStato == arrCod[i]):
+                        stati[i].addRil(h)
+        elif(h.cStato==codePrecStato):
+            present=h.cStato in arrCod
+            if(present==True):
+                for i in range(len(arrCod)):
+                    if(h.cStato == arrCod[i]):
+                        stati[i].addRil(h)
+                        
+            
+        codePrecStato = h.cStato     
+            
+    return stati ,arrCod
+
+def meanday(stato):
+    aMeanday=np.empty(0)
+    aDate=np.empty(0)
+    date=np.empty(0)
+    for h in stato.arrRil:
+        aMeanday = np.append(aMeanday ,h.mean)
+        aDate = np.append(aDate ,h.data)
+    for i in range(len(aDate)-1):
+        if(aDate[i]!=aDate[i+1]):
+            date=np.append(date,aDate[i])
+        if (i==(len(aDate)-2)):
+            date=np.append(date,aDate[i])
+
+    return aMeanday , date
 
 def graphInTime2(arrx1,arry1,arrx2,arry2,title,cl):
     fig, (ax1, ax2) = plt.subplots(2)
