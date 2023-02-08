@@ -51,7 +51,7 @@ np.set_printoptions(threshold=sys.maxsize)
 print(dateAZ,' Lunghezza ',len(dateAZ))
 '''
 print(meanO3AZ ,' Lunghezza ',len(meanO3AZ),len(dateAZ))
-print(arr)
+print(arr,len(arr))
 
 
 

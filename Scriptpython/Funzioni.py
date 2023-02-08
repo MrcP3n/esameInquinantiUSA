@@ -104,13 +104,16 @@ def meanday(stato):
     aDate=np.empty(0)
     date=np.empty(0)
     rip=np.array([0])
+    rip1=np.empty(0)
     j=0
-    z=1
+    g=0
+    z=0
     arr=np.empty(0)
     aMediaDay=np.empty(0)
     for h in stato.arrRil:
         aMeanday = np.append(aMeanday ,h.mean)
         aDate = np.append(aDate ,h.data)
+        
     for i in range(len(aDate)-1):
         if(aDate[i]!=aDate[i+1]):
             date=np.append(date,aDate[i])
@@ -118,22 +121,25 @@ def meanday(stato):
             j=i
         if (i==(len(aDate)-2)):
             date=np.append(date,aDate[i])
-
+            rip=np.append(rip,i-j)
+            
+    for i in range(len(rip)-1):
+        if(i>0):
+            rip1=np.append(rip1,rip1[i-1]+rip[i])
+        else:
+            rip1=np.append(rip1,rip[i]+rip[i+1])
+            
     for i in range(len(aMeanday)):
         arr=np.append(arr,aMeanday[i])
-        if(i==rip[z]):
-            m=statistics.mean(arr)
-            aMediaDay=np.append(aMediaDay,m)
-            arr=np.empty(0)
-            z=z+1
-        if(i==rip[z] and aMediaDay.size >= 1):
-            m=statistics.mean(arr)
-            aMediaDay=np.append(aMediaDay,m)
-            b = arr
-            arr=np.empty(0)
-            z=z+1
-
-    return aMediaDay , aDate ,arr
+        if(i>0):
+            if(rip1[z]==i):
+                m=statistics.mean(arr)
+                aMediaDay=np.append(aMediaDay,m)
+                arr=np.empty(0)
+                if(z<rip1.size):
+                    z=z+1
+     
+    return aMeanday , date ,arr
 
 def graphInTime2(arrx1,arry1,arrx2,arry2,title,cl):
     fig, (ax1, ax2) = plt.subplots(2)
