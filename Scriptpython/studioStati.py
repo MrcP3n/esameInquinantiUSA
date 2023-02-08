@@ -45,13 +45,13 @@ for i in range(34):
     print('nRil', stati[i].nril)
 print('Numero totale di stati: ',stati.size, 'codici', acod)
 print('------------------------')
-meanO3AZ , dateAZ ,arr =f.meanday(stati[0])
+meanO3AZ , dateAZ  =f.meanday(stati[0])
 np.set_printoptions(threshold=sys.maxsize)
-'''
-print(dateAZ,' Lunghezza ',len(dateAZ))
-'''
-print(meanO3AZ ,' Lunghezza ',len(meanO3AZ),len(dateAZ))
-print(arr,len(arr))
+
+print(meanO3AZ ,' Lunghezza ',len(meanO3AZ))
+print(dateAZ ,' Lunghezza ',len(dateAZ))
+
+
 
 
 

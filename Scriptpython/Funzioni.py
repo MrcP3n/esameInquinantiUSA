@@ -110,6 +110,9 @@ def meanday(stato):
     z=0
     arr=np.empty(0)
     aMediaDay=np.empty(0)
+    '''
+    Codice che prende un solo dato giornaliero facendo la media dei dati nell' intervallo in cui si ripetono i dati, ricavo la ripetizione con rip e rip1 e li sfrutto in un altro ciclo per completare l' operazione
+    '''
     for h in stato.arrRil:
         aMeanday = np.append(aMeanday ,h.mean)
         aDate = np.append(aDate ,h.data)
@@ -122,24 +125,23 @@ def meanday(stato):
         if (i==(len(aDate)-2)):
             date=np.append(date,aDate[i])
             rip=np.append(rip,i-j)
-            
+          
     for i in range(len(rip)-1):
         if(i>0):
             rip1=np.append(rip1,rip1[i-1]+rip[i])
         else:
             rip1=np.append(rip1,rip[i]+rip[i+1])
-            
+           
     for i in range(len(aMeanday)):
         arr=np.append(arr,aMeanday[i])
-        if(i>0):
-            if(rip1[z]==i):
-                m=statistics.mean(arr)
-                aMediaDay=np.append(aMediaDay,m)
-                arr=np.empty(0)
-                if(z<rip1.size):
-                    z=z+1
+        if( i==rip1[z] ):
+            m=statistics.mean(arr)
+            aMediaDay=np.append(aMediaDay,m)
+            arr=np.empty(0)
+            if(z<(rip1.size-1)):
+                z=z+1
      
-    return aMeanday , date ,arr
+    return aMediaDay , date 
 
 def graphInTime2(arrx1,arry1,arrx2,arry2,title,cl):
     fig, (ax1, ax2) = plt.subplots(2)
