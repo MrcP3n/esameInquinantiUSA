@@ -111,7 +111,9 @@ def meanday(stato):
     arr=np.empty(0)
     aMediaDay=np.empty(0)
     '''
-    Codice che prende un solo dato giornaliero facendo la media dei dati nell' intervallo in cui si ripetono i dati, ricavo la ripetizione con rip e rip1 e li sfrutto in un altro ciclo per completare l' operazione
+    Codice che prende un solo dato giornaliero facendo 
+    la media dei dati nell' intervallo in cui si ripetono i dati, ricavo la
+    ripetizione con rip e rip1 e li sfrutto in un altro ciclo per completar    e l' operazione
     '''
     for h in stato.arrRil:
         aMeanday = np.append(aMeanday ,h.mean)
