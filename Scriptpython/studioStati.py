@@ -119,25 +119,62 @@ if False:
     #WEST COAST AND CENTER
     title='Spettri Oregon, California, Arizona, Texas, Oklahoma'
     #f.graphSpettri5(coffOR , cofFreqOR,coffCA , cofFreqCA,coffAZ , cofFreqAZ,coffTX , cofFreqTX,coffOK , cofFreqOK,title)
-    
+    #EAST COAST
     title='Spettri Maine, Maryland, Massachusetts, Pennsylvania, New York'
     f.graphSpettri5(coffME , cofFreqME,coffMD , cofFreqMD,coffMA , cofFreqMA,coffPA , cofFreqPA,coffNY , cofFreqNY,title)
-    
+    #EAST COAST E CENTER
     title='Spettri Florida, Illinois, District of columbia, North Dakota, North Carolina'
     f.graphSpettri5(coffFL , cofFreqFL,coffIL , cofFreqIL,coffDC , cofFreqDC,coffND , cofFreqND,coffNC , cofFreqNC,title)
-    #EAST COAST
-    title='Spettri Connecticut, Pennsylvania, North Carolina, South Carolina, Florida'
-    f.graphSpettri5(coffCT , cofFreqCT,coffPA , cofFreqPA,coffNC , cofFreqNC,coffSC , cofFreqSC,coffFL , cofFreqFL,title)
+    #EAST COAST E CENTER
+    title='Spettri Connecticut, New York, North Carolina, South Carolina, Florida'
+    f.graphSpettri5(coffCT , cofFreqCT,coffNY , cofFreqNY,coffNC , cofFreqNC,coffSC , cofFreqSC,coffFL , cofFreqFL,title)
     #GENERALE
     title='Spettro Oregon, Pennsylvania, North Dakota, South Carolina, Illinois'#Cali al posto di illi
     f.graphSpettri5(coffOR , cofFreqOR,coffPA , cofFreqPA,coffND , cofFreqND,coffSC , cofFreqSC,coffIL , cofFreqIL,title)   
 
 
-'''Periodicità e max'''
+'''Periodicità'''
+if False:
+    print('Stato AZ: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffAZ[maxAZ])**2, cofFreqAZ[maxAZ], 1/cofFreqAZ[maxAZ]))
+    print('Stato CA: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffCA[maxCA])**2, cofFreqCA[maxCA], 1/cofFreqCA[maxCA]))
+    print('Stato CT: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffCT[maxCT])**2, cofFreqCT[maxCT], 1/cofFreqCT[maxCT]))
+    print('Stato DC: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffDC[maxDC])**2, cofFreqDC[maxDC], 1/cofFreqDC[maxDC]))
+    print('Stato FL: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffFL[maxFL])**2, cofFreqFL[maxFL], 1/cofFreqFL[maxFL]))
+    print('Stato IL: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffIL[maxIL])**2, cofFreqIL[maxIL], 1/cofFreqIL[maxIL]))
+    print('Stato ME: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffME[maxME])**2, cofFreqME[maxME], 1/cofFreqME[maxME]))
+    print('Stato MD: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffMD[maxMD])**2, cofFreqMD[maxMD], 1/cofFreqMD[maxMD]))
+    print('Stato MA: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffMA[maxMA])**2, cofFreqMA[maxMA], 1/cofFreqMA[maxMA]))
+    print('Stato NY: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffNY[maxNY])**2, cofFreqNY[maxNY], 1/cofFreqNY[maxNY]))
+    print('Stato NC: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffNC[maxNC])**2, cofFreqNC[maxNC], 1/cofFreqNC[maxNC]))
+    print('Stato ND: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffND[maxND])**2, cofFreqND[maxND], 1/cofFreqND[maxND]))
+    print('Stato OK: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffOK[maxOK])**2, cofFreqOK[maxOK], 1/cofFreqOK[maxOK]))
+    print('Stato OR: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffOR[maxOR])**2, cofFreqOR[maxOR], 1/cofFreqOR[maxOR]))
+    print('Stato PA: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffPA[maxPA])**2, cofFreqPA[maxPA], 1/cofFreqPA[maxPA]))
+    print('Stato SC: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffSC[maxSC])**2, cofFreqSC[maxSC], 1/cofFreqSC[maxSC]))
+    print('Stato TX: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffTX[maxTX])**2, cofFreqTX[maxTX], 1/cofFreqTX[maxTX]))
 
+if False:
+    title='Spettro di potenza dei 5 stati nella East Coast in funzione del periodo'
+    #EAST
+    f.graphSpettri5Per(coffME , cofFreqME,coffMD , cofFreqMD,coffMA , cofFreqMA,coffPA , cofFreqPA,coffNY , cofFreqNY,title)
+    #WEST
+    title='Spettro di potenza dei 5 stati nella West Coast  Centro e in funzione del periodo'
+    #f.graphSpettri5Per(coffOR , cofFreqOR,coffCA , cofFreqCA,coffAZ , cofFreqAZ,coffTX , cofFreqTX,coffOK , cofFreqOK,title)
 
-'''Correlazione con frequenze'''
+    #TUTTI SPARSI
+    title='Spettro di potenza dei 5 stati in zone differenti in funzione del periodo'
+    f.graphSpettri5Per(coffOR , cofFreqOR,coffPA , cofFreqPA,coffND , cofFreqND,coffSC , cofFreqSC,coffIL , cofFreqIL,title)
+        #EAST COAST E CENTER
+    title='Spettri di potenza di 5 stati nella East Coast e al centro in funzionde del periodo'
+    f.graphSpettri5(coffFL , cofFreqFL,coffIL , cofFreqIL,coffDC , cofFreqDC,coffND , cofFreqND,coffNC , cofFreqNC,title)
+    #EAST COAST E CENTER
+    title='Spettri di potenza di 5 stati nella East Coast e al centro in funzionde del periodo'
+    f.graphSpettri5(coffCT , cofFreqCT,coffNY , cofFreqNY,coffNC , cofFreqNC,coffSC , cofFreqSC,coffFL , cofFreqFL,title)
+
+'''Correlazione con freq'''    
+
 
 '''Filtri '''
+
 
 '''Dati originali rispetto a filtrati'''

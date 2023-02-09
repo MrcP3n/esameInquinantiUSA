@@ -111,6 +111,12 @@ if True:
     title='Spettro di potenza dei 5 stati contigui in funzione del periodo'
     f.graphSpettri5Per(coffCT1 , cofFreqCT1,coffMD5 , cofFreqMD5,coffNY9 , cofFreqNY9,coffPA20 , cofFreqPA20, coffVA31 , cofFreqVA31,title)
     
+'''Correlazione con coeff'''    
 
+
+'''Filtri '''
+
+
+'''Dati originali rispetto a filtrati'''
 
 
