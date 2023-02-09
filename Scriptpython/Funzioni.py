@@ -99,7 +99,7 @@ riesco ad aggiungere le rilevazioni nel giusto stato facendo scorrere gli indici
             
     return stati ,arrCod
 
-def meanday(stato):
+def meanDay(stato):
     aMeanday=np.empty(0)
     aDate=np.empty(0)
     date=np.empty(0)
@@ -125,8 +125,8 @@ def meanday(stato):
             rip=np.append(rip,i-j)
             j=i
         if (i==(len(aDate)-2)):
-            date=np.append(date,aDate[i])
-            rip=np.append(rip,i-j)
+            date=np.append(date,aDate[i+1])
+            rip=np.append(rip,(i+1)-j)
           
     for i in range(len(rip)-1):
         if(i>0):
@@ -140,12 +140,17 @@ def meanday(stato):
             m=statistics.mean(arr)
             aMediaDay=np.append(aMediaDay,m)
             arr=np.empty(0)
-            if(z<(rip1.size-1)):
+            if(z<(rip1.size)-1):
                 z=z+1
         if(rip[z]==0):
             z=z+1
-     
-    return aMediaDay , date ,rip1
+        if(i==(len(aMeanday)-1) and arr.size!=0 ):
+            m=statistics.mean(arr)
+            aMediaDay=np.append(aMediaDay,m)
+            arr=np.empty(0)
+            
+        
+    return aMediaDay , date ,arr
 
 def graphInTime2(arrx1,arry1,arrx2,arry2,title,cl):
     fig, (ax1, ax2) = plt.subplots(2)
