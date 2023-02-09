@@ -142,8 +142,10 @@ def meanday(stato):
             arr=np.empty(0)
             if(z<(rip1.size-1)):
                 z=z+1
+        if(rip[z]==0):
+            z=z+1
      
-    return aMediaDay , date 
+    return aMediaDay , date ,rip1
 
 def graphInTime2(arrx1,arry1,arrx2,arry2,title,cl):
     fig, (ax1, ax2) = plt.subplots(2)
