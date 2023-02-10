@@ -119,14 +119,17 @@ def meanDay(stato):
         aMeanday = np.append(aMeanday ,h.mean)
         aDate = np.append(aDate ,h.data)
         
-    for i in range(len(aDate)-1):
+    for i in range(len(aDate)):
+        if (i==(len(aDate)-1)):
+            date=np.append(date,aDate[i])
+            rip=np.append(rip,(i+1)-j)
+            break
+            '''metti il break'''
         if(aDate[i]!=aDate[i+1]):
             date=np.append(date,aDate[i])
             rip=np.append(rip,i-j)
             j=i
-        if (i==(len(aDate)-2)):
-            date=np.append(date,aDate[i+1])
-            rip=np.append(rip,(i+1)-j)
+
           
     for i in range(len(rip)-1):
         if(i>0):
@@ -277,18 +280,18 @@ def trInv(coff, fil, mean):
     arrFil = fft.ifft(cofFil, n=len(mean))
     return arrFil
 
-'''
-def graphFil(data1,acof1,afil1,data2,acof2,afil2,data3,acof3,afil3,data4,acof4,afil4,title):
+
+def graphFil(data1,amean1,afil1,data2,amean2,afil2,data3,amean3,afil3,data4,amean4,afil4,title):
     #Crea grafici dei dati filtrati rispetto agli originali
     fig, (ax1,ax2,ax3,ax4) = plt.subplots(4)
-    fig.suptitle(title)'limegreen''cyan''midnightblue''orchid'
-    ax1.plot(data1,acof1 , color='red')
-    ax1.plot(data1,afil1 ,color='darkpink')
-    ax2.plot(data2,acof2 , color='limegreen')
+    fig.suptitle(title)
+    ax1.plot(data1,amean1 , color='red')
+    ax1.plot(data1,afil1 ,color='chocolate')
+    ax2.plot(data2,amean2 , color='limegreen')
     ax2.plot(data2,afil2 ,color='cyan')
-    ax3.plot(data3,acof3 , color='midnightblue')
+    ax3.plot(data3,amean3 , color='midnightblue')
     ax3.plot(data3,afil3 ,color='black')
-    ax4.plot(data4,acof4 , color='orchid')
+    ax4.plot(data4,amean4 , color='orchid')
     ax4.plot(data4,afil4 ,color='cornflowerblue')
     ax1.xaxis.set_major_locator(MultipleLocator(30))
     ax1.xaxis.set_minor_locator(MultipleLocator(5))
@@ -306,15 +309,15 @@ def graphFil(data1,acof1,afil1,data2,acof2,afil2,data3,acof3,afil3,data4,acof4,a
     plt.show()
     
     return
-'''
 
-def graphRumori(data1,acof1,afil1,data2,acof2,afil2,data3,acof3,afil3,data4,acof4,afil4,title):
+
+def graphRumori(data1,amean1,afil1,data2,amean2,afil2,data3,amean3,afil3,data4,amean4,afil4,title):
     fig, (ax1,ax2,ax3,ax4) = plt.subplots(4)
     fig.suptitle(title)
-    ax1.plot(data1,acof1-afil1 , color='red')
-    ax2.plot(data2,acof2-afil2 , color='limegreen')
-    ax3.plot(data3,acof3-afil3 , color='midnightblue')
-    ax4.plot(data4,acof4-afil4 ,color='cornflowerblue')
+    ax1.plot(data1,amean1-afil1 , color='red')
+    ax2.plot(data2,amean2-afil2 , color='limegreen')
+    ax3.plot(data3,amean3-afil3 , color='midnightblue')
+    ax4.plot(data4,amean4-afil4 ,color='cornflowerblue')
     ax1.xaxis.set_major_locator(MultipleLocator(30))
     ax1.xaxis.set_minor_locator(MultipleLocator(5))
     ax2.xaxis.set_major_locator(MultipleLocator(30))
