@@ -205,8 +205,8 @@ def graphInTime5(arrx1,arry1,arrx2,arry2,arrx3,arry3, arrx4,arry4,arrx5,arry5,ti
 
 def trFour_freq(arrMean):
     #sNyqu=0.5
-    cofft=fft.rfft(arrMean)
-    cofFreq=fft.rfftfreq(len(cofft) , d=1)
+    cofft=fft.fft(arrMean)
+    cofFreq=fft.fftfreq(len(cofft) , d=1)
     #cofrshift = fft.fftshift(cofFreq)
     #cofftshift = fft.fftshift(cofft)
     mod = np.absolute(cofft)**2
@@ -267,3 +267,65 @@ def graphSpettri5Per(acof1,afreq1,acof2,afreq2,acof3,afreq3,acof4,afreq4,acof5,a
     return
 
 
+def trInv(coff, fil, mean):
+    #funzione che mi restituisce la trasformata inversa con i coeff filtrati in ordine:
+    #coff array spettro,fil valore di soglia,mean medie giornaliere
+    
+    mask = np.absolute(coff)**2 < fil
+    cofFil = coff.copy()
+    cofFil[mask] = 0
+    arrFil = fft.ifft(cofFil, n=len(mean))
+    return arrFil
+
+'''
+def graphFil(data1,acof1,afil1,data2,acof2,afil2,data3,acof3,afil3,data4,acof4,afil4,title):
+    #Crea grafici dei dati filtrati rispetto agli originali
+    fig, (ax1,ax2,ax3,ax4) = plt.subplots(4)
+    fig.suptitle(title)'limegreen''cyan''midnightblue''orchid'
+    ax1.plot(data1,acof1 , color='red')
+    ax1.plot(data1,afil1 ,color='darkpink')
+    ax2.plot(data2,acof2 , color='limegreen')
+    ax2.plot(data2,afil2 ,color='cyan')
+    ax3.plot(data3,acof3 , color='midnightblue')
+    ax3.plot(data3,afil3 ,color='black')
+    ax4.plot(data4,acof4 , color='orchid')
+    ax4.plot(data4,afil4 ,color='cornflowerblue')
+    ax1.xaxis.set_major_locator(MultipleLocator(30))
+    ax1.xaxis.set_minor_locator(MultipleLocator(5))
+    ax2.xaxis.set_major_locator(MultipleLocator(30))
+    ax2.xaxis.set_minor_locator(MultipleLocator(5))
+    ax3.xaxis.set_major_locator(MultipleLocator(30))
+    ax3.xaxis.set_minor_locator(MultipleLocator(5))
+    ax3.set_ylabel('Ozono')#Migliora
+    ax4.xaxis.set_major_locator(MultipleLocator(30))
+    ax4.xaxis.set_minor_locator(MultipleLocator(5))
+    ax4.set_xlabel('Date')
+    fig.set_figheight(7)
+    fig.set_figwidth(10)
+    plt.savefig(title)
+    plt.show()
+    
+    return
+'''
+
+def graphRumori(data1,acof1,afil1,data2,acof2,afil2,data3,acof3,afil3,data4,acof4,afil4,title):
+    fig, (ax1,ax2,ax3,ax4) = plt.subplots(4)
+    fig.suptitle(title)
+    ax1.plot(data1,acof1-afil1 , color='red')
+    ax2.plot(data2,acof2-afil2 , color='limegreen')
+    ax3.plot(data3,acof3-afil3 , color='midnightblue')
+    ax4.plot(data4,acof4-afil4 ,color='cornflowerblue')
+    ax1.xaxis.set_major_locator(MultipleLocator(30))
+    ax1.xaxis.set_minor_locator(MultipleLocator(5))
+    ax2.xaxis.set_major_locator(MultipleLocator(30))
+    ax2.xaxis.set_minor_locator(MultipleLocator(5))
+    ax3.xaxis.set_major_locator(MultipleLocator(30))
+    ax3.xaxis.set_minor_locator(MultipleLocator(5))
+    ax3.set_ylabel('Differenza')#Migliora
+    ax4.xaxis.set_major_locator(MultipleLocator(30))
+    ax4.xaxis.set_minor_locator(MultipleLocator(5))
+    ax4.set_xlabel('Date')
+    fig.set_figheight(7)
+    fig.set_figwidth(10)
+    plt.savefig(title)
+    plt.show()

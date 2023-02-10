@@ -61,10 +61,9 @@ stazVA31Date , stazVA31Mean =f.takeArr(staz5Stati[31])
 title6='Confronto stazione Pennsylvania con stazione Virginia'
 
 stazMD5Date , stazMD5Mean =f.takeArr(staz5Stati[5])
-stazNY9Date , stazNY9Mean =f.takeArr(staz5Stati[9])
 title7='Confronto stazione Maryland con stazione New york'
 title8='Confronto 5 Stazioni degli stati contigui'
-if True: 
+if False: 
     f.graphInTime2(stazCT2Date ,stazCT2Mean,stazCT3Date ,stazCT3Mean,title1,'red')
     f.graphInTime2(stazNY8Date ,stazNY8Mean,stazNY9Date ,stazNY9Mean ,title2,'cyan')
     f.graphInTime2(stazVA29Date ,stazVA29Mean, stazVA33Date ,stazVA33Mean,title3,'orchid')
@@ -98,14 +97,14 @@ modcofNY9 = np.absolute(coffNY9)**2
 modcofPA20 = np.absolute(coffPA20)**2
 modcofVA31 = np.absolute(coffVA31)**2
 
-if True:
+if False:
     print('Stazione CT: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(modcofCT1[maxCT1], cofFreqCT1[maxCT1], 1/cofFreqCT1[maxCT1]))
     print('Stazione MD: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(modcofMD5[maxMD5], cofFreqMD5[maxMD5], 1/cofFreqMD5[maxMD5]))
     print('Stazione NY: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(modcofNY9[maxNY9], cofFreqNY9[maxNY9], 1/cofFreqNY9[maxNY9]))
     print('Stazione PA: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(modcofPA20[maxPA20], cofFreqPA20[maxPA20], 1/cofFreqPA20[maxPA20]))
     print('Stazione VA: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(modcofVA31[maxVA31], cofFreqVA31[maxVA31], 1/cofFreqVA31[maxVA31]))
 
-if True:
+if False:
     title='Spettro di potenza dei 5 stati contigui in funzione della frequenza'
     f.graphSpettri5(coffCT1 , cofFreqCT1,coffMD5 , cofFreqMD5,coffNY9 , cofFreqNY9,coffPA20 , cofFreqPA20, coffVA31 , cofFreqVA31,title)
     title='Spettro di potenza dei 5 stati contigui in funzione del periodo'
@@ -114,9 +113,36 @@ if True:
 '''Correlazione con coeff'''    
 
 
-'''Filtri '''
-
+'''Filtri'''
+cofFilCT1=f.trInv(coffCT1,1e5,stazCT1Mean)
+cofFilCT2=f.trInv(coffCT2,1e5,stazCT2Mean)
+cofFilCT3=f.trInv(coffCT3,1e5,stazCT3Mean)
+cofFilNY8=f.trInv(coffNY8,1e6,stazNY8Mean)
+cofFilNY9=f.trInv(coffNY9,1e6,stazNY9Mean)
+cofFilPA13=f.trInv(coffPA13,2e6,stazPA13Mean)
+cofFilPA15=f.trInv(coffPA15,2e6,stazPA15Mean)
+cofFilPA20=f.trInv(coffPA20,2e6,stazPA20Mean)
+cofFilPA24=f.trInv(coffPA24,2e6,stazPA24Mean)#togli una di PA
+cofFilVA29=f.trInv(coffVA29,5e7,stazVA29Mean)#togli una di VA
+cofFilVA31=f.trInv(coffVA31,5e7,stazVA31Mean)
+cofFilVA33=f.trInv(coffVA33,5e7,stazVA33Mean)
+cofFilVA34=f.trInv(coffVA34,5e7,stazVA34Mean)
+cofFilMD5=f.trInv(coffMD5,2e6,stazMD5Mean)
 
 '''Dati originali rispetto a filtrati'''
 
+
+
+'''Rumori'''
+if True:
+    title='Grafico andamento della differenza tra dati originali e filtrati delle stazioni CT1 CT2 CT3 e NY8'
+    f.graphRumori(stazCT1Date,coffCT1,cofFilCT1,stazCT2Date,coffCT2,cofFilCT2,stazCT3Date,coffCT3,cofFilCT3,stazNY8Date,coffNY8,cofFilNY8,title)
+    title='Grafico andamento della differenza tra dati originali e filtrati delle stazioni  NY9 PA13,PA15 e PA24'
+    f.graphRumori(stazCT1Date,coffCT1,cofFilCT1,stazCT2Date,coffCT2,cofFilCT2,stazCT3Date,coffCT3,cofFilCT3,stazNY8Date,coffNY8,cofFilNY8,title)
+    title='Grafico andamento della differenza tra dati originali e filtrati delle stazioni VA29,VA31,VA34 e MD5'
+    f.graphRumori(stazCT1Date,coffCT1,cofFilCT1,stazCT2Date,coffCT2,cofFilCT2,stazCT3Date,coffCT3,cofFilCT3,stazNY8Date,coffNY8,cofFilNY8,title)
+    
+    '''
+    print(len(stazCT1Date),len(coffCT1),len(cofFilCT1))
+    '''
 
