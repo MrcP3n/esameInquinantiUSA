@@ -52,6 +52,7 @@ np.set_printoptions(threshold=sys.maxsize)
 
 meanO3AZ , dateAZ,arr  =f.meanDay(stati[0])
 meanO3CA , dateCA,arr1  =f.meanDay(stati[2])
+meanO3CA=np.append(meanO3CA,0.01672)
 meanO3CT , dateCT,arr =f.meanDay(stati[4])
 meanO3DC , dateDC ,arr =f.meanDay(stati[5])
 meanO3FL , dateFL ,arr =f.meanDay(stati[6])
@@ -74,14 +75,14 @@ meanO3TX , dateTX ,arr =f.meanDay(stati[30])
 
 
 print('dateCA',' Lunghezza ',len(dateCA))
-print('meanO3CA' ,' Lunghezza ',len(meanO3CA))
-print('arr1' ,' Lunghezza ',len(arr))
+print('meanO3CA',' Lunghezza ',len(meanO3CA))
+print( 'arr1'  ,' Lunghezza ',len(arr1))
 
 '''Andamento Temporale'''
 if False:
     #WEST COAST AND CENTER
     title='Andamenti Oregon, California, Arizona, Texas, Oklahoma'
-    #f.graphInTime5(dateOR,meanO3OR,dateCA,meanO3CA,dateAZ,meanO3AZ,dateTX,meanO3TX,dateOK,meanO3OK,title)
+    f.graphInTime5(dateOR,meanO3OR,dateCA,meanO3CA,dateAZ,meanO3AZ,dateTX,meanO3TX,dateOK,meanO3OK,title)
     #EAST COAST AND CENTER
     title='Andamenti Maine, Maryland, Massachusetts, Pennsylvania, New York'
     f.graphInTime5(dateME,meanO3ME,dateMD,meanO3MD,dateMA,meanO3MA,datePA,meanO3PA,dateNY,meanO3NY,title)
@@ -118,7 +119,7 @@ coffTX , cofFreqTX , maxTX = f.trFour_freq(meanO3TX)
 if False:
     #WEST COAST AND CENTER
     title='Spettri Oregon, California, Arizona, Texas, Oklahoma'
-    #f.graphSpettri5(coffOR , cofFreqOR,coffCA , cofFreqCA,coffAZ , cofFreqAZ,coffTX , cofFreqTX,coffOK , cofFreqOK,title)
+    f.graphSpettri5(coffOR , cofFreqOR,coffCA , cofFreqCA,coffAZ , cofFreqAZ,coffTX , cofFreqTX,coffOK , cofFreqOK,title)
     #EAST COAST
     title='Spettri Maine, Maryland, Massachusetts, Pennsylvania, New York'
     f.graphSpettri5(coffME , cofFreqME,coffMD , cofFreqMD,coffMA , cofFreqMA,coffPA , cofFreqPA,coffNY , cofFreqNY,title)
@@ -175,45 +176,46 @@ if False:
 
 
 '''Filtri '''
-FilAZ=f.trInv(coffAZ,1e4,meanO3AZ)
-#FilCA=f.trInv(coffCA,1e4,meanO3CA)
-FilCT=f.trInv(coffCT,1e4,meanO3CT)
-FilDC=f.trInv(coffDC,1e4,meanO3DC)
-FilFL=f.trInv(coffFL,1e4,meanO3FL)
-FilIL=f.trInv(coffIL,1e4,meanO3IL)
-FilME=f.trInv(coffME,1e4,meanO3ME)
-FilMD=f.trInv(coffMD,1e4,meanO3MD)
-FilMA=f.trInv(coffMA,1e4,meanO3MA)
-FilNY=f.trInv(coffNY,1e4,meanO3NY)
-FilNC=f.trInv(coffNC,1e4,meanO3NC)
-FilND=f.trInv(coffND,1e4,meanO3ND)
-FilOK=f.trInv(coffOK,1e4,meanO3OK)
-FilOR=f.trInv(coffOR,1e4,meanO3OR)
-FilPA=f.trInv(coffPA,1e4,meanO3PA)
-FilTX=f.trInv(coffTX,1e4,meanO3TX)
+FilAZ=f.trInv(coffAZ,0.3,meanO3AZ)
+FilCA=f.trInv(coffCA,0.7,meanO3CA)
+FilCT=f.trInv(coffCT,0.6,meanO3CT)
+FilDC=f.trInv(coffDC,0.4,meanO3DC)
+FilFL=f.trInv(coffFL,0.5,meanO3FL)
+FilIL=f.trInv(coffIL,0.4,meanO3IL)
+FilME=f.trInv(coffME,0.5,meanO3ME)
+FilMD=f.trInv(coffMD,1,meanO3MD)
+FilMA=f.trInv(coffMA,1,meanO3MA)
+FilNY=f.trInv(coffNY,0.4,meanO3NY)
+FilNC=f.trInv(coffNC,1,meanO3NC)
+FilND=f.trInv(coffND,1,meanO3ND)
+FilOK=f.trInv(coffOK,0.5,meanO3OK)
+FilOR=f.trInv(coffOR,1,meanO3OR)
+FilPA=f.trInv(coffPA,1,meanO3PA)
+FilTX=f.trInv(coffTX,0.3,meanO3TX)
 
 
 '''Dati originali rispetto a filtrati'''
 if False:
     title='Grafico dati e dati filtrati a confronto per AZ CA CT e DC'
-    #f.graphFil(dateAZ,meanO3AZ,FilAZ,dateCA,meanO3CA,FilCA,dateCT,meanO3CT,FilCT,dateDC,meanO3DC,FilDC,title)
+    f.graphFil(dateAZ,meanO3AZ,FilAZ,dateCA,meanO3CA,FilCA,dateCT,meanO3CT,FilCT,dateDC,meanO3DC,FilDC,title)
+    
     title='Grafico dati e dati filtrati a confronto per FL IL ME e MD'
     f.graphFil(dateFL,meanO3FL,FilFL,dateIL,meanO3IL,FilIL,dateME,meanO3ME,FilME,dateMD,meanO3MD,FilMD,title)
     title='Grafico dati e dati filtrati a confronto per MA NY NC e ND'
     f.graphFil(dateMA,meanO3MA,FilMA,dateNY,meanO3NY,FilNY,dateNC,meanO3NC,FilNC,dateND,meanO3ND,FilND,title)
     title='Grafico dati e dati filtrati a confronto per OK OR PA e TX'
     f.graphFil(dateOK,meanO3OK,FilOK,dateOR,meanO3OR,FilOR,datePA,meanO3PA,FilPA,dateTX,meanO3TX,FilTX,title)
-
+    
 '''Rumori'''
 
 if False:
-    title='Grafico andamento della differenza tra dati originali e filtrati delle stazioni AZ CA CT e DC'
-    #f.graphRumori(dateAZ,meanO3AZ,FilAZ,dateCA,meanO3CA,FilCA,dateCT,meanO3CT,FilCT,dateDC,meanO3DC,FilDC,title)
-    title='Grafico andamento della differenza tra dati originali e filtrati delle stazioni FL IL ME e MD'
+    title='Grafico andamento della differenza tra dati originali e filtrati degli stati AZ CA CT e DC'
+    f.graphRumori(dateAZ,meanO3AZ,FilAZ,dateCA,meanO3CA,FilCA,dateCT,meanO3CT,FilCT,dateDC,meanO3DC,FilDC,title)
+    title='Grafico andamento della differenza tra dati originali e filtrati degli stati FL IL ME e MD'
     f.graphRumori(dateFL,meanO3FL,FilFL,dateIL,meanO3IL,FilIL,dateME,meanO3ME,FilME,dateMD,meanO3MD,FilMD,title)
-    title='Grafico andamento della differenza tra dati originali e filtrati delle stazioni MA NY NC e ND'
+    title='Grafico andamento della differenza tra dati originali e filtrati degli stati MA NY NC e ND'
     f.graphRumori(dateMA,meanO3MA,FilMA,dateNY,meanO3NY,FilNY,dateNC,meanO3NC,FilNC,dateND,meanO3ND,FilND,title)
-    title='Grafico andamento della differenza tra dati originali e filtrati delle stazioni OK OR PA e TX'
+    title='Grafico andamento della differenza tra dati originali e filtrati degli stati OK OR PA e TX'
     f.graphRumori(dateOK,meanO3OK,FilOK,dateOR,meanO3OR,FilOR,datePA,meanO3PA,FilPA,dateTX,meanO3TX,FilTX,title)
 
     '''Cerca che tipo di rumore è'''

@@ -51,16 +51,7 @@ inoltre per evitare che rilevazione con lo stesso codice di stazione ma presa in
       codePrecStaz = h.cStaz   
       stazioni[-1].addril(h)    
   return stazioni
-
-
-def takeArr(staz):
-    average = np.empty(0)
-    date = np.empty(0)
-    for h in staz.arrRil:
-        average = np.append(average ,h.mean)
-        date = np.append(date ,h.data)
-        
-    return date , average   
+  
 
 def getStati(arRil):
     '''
@@ -99,6 +90,15 @@ riesco ad aggiungere le rilevazioni nel giusto stato facendo scorrere gli indici
             
     return stati ,arrCod
 
+def takeArr(staz):
+    average = np.empty(0)
+    date = np.empty(0)
+    for h in staz.arrRil:
+        average = np.append(average ,h.mean)
+        date = np.append(date ,h.data)
+        
+    return date , average 
+
 def meanDay(stato):
     aMeanday=np.empty(0)
     aDate=np.empty(0)
@@ -124,7 +124,7 @@ def meanDay(stato):
             date=np.append(date,aDate[i])
             rip=np.append(rip,(i+1)-j)
             break
-            '''metti il break'''
+            
         if(aDate[i]!=aDate[i+1]):
             date=np.append(date,aDate[i])
             rip=np.append(rip,i-j)
@@ -153,7 +153,7 @@ def meanDay(stato):
             arr=np.empty(0)
             
         
-    return aMediaDay , date ,arr
+    return aMediaDay , date ,rip1
 
 def graphInTime2(arrx1,arry1,arrx2,arry2,title,cl):
     fig, (ax1, ax2) = plt.subplots(2)
@@ -182,34 +182,30 @@ def graphInTime5(arrx1,arry1,arrx2,arry2,arrx3,arry3, arrx4,arry4,arrx5,arry5,ti
     ax3.plot(arrx3, arry3, color='cyan')
     ax4.plot(arrx4, arry4, color='midnightblue')
     ax5.plot(arrx5, arry5, color='orchid')
-    ax1.set_ylabel('Ozono CT')
-    ax2.set_ylabel('Ozono MD')
     ax1.xaxis.set_major_locator(MultipleLocator(30))
     ax1.xaxis.set_minor_locator(MultipleLocator(5))
     ax2.xaxis.set_major_locator(MultipleLocator(30))
     ax2.xaxis.set_minor_locator(MultipleLocator(5))
-    ax3.set_ylabel('Ozono NY')
-    ax4.set_ylabel('Ozono PA')
+    ax3.set_ylabel('Ozono [ppm]')
     ax3.xaxis.set_major_locator(MultipleLocator(30))
     ax3.xaxis.set_minor_locator(MultipleLocator(5))
     ax4.xaxis.set_major_locator(MultipleLocator(30))
     ax4.xaxis.set_minor_locator(MultipleLocator(5))
     ax5.set_xlabel('Date')
-    ax5.set_ylabel('Ozono VA')
     ax5.xaxis.set_major_locator(MultipleLocator(30))
     ax5.xaxis.set_minor_locator(MultipleLocator(5))
     fig.set_figheight(7)
     fig.set_figwidth(10)
     plt.savefig(title)
     plt.show()
-    
+    #Prova legend
     return
     
 
 def trFour_freq(arrMean):
     #sNyqu=0.5
-    cofft=fft.fft(arrMean)
-    cofFreq=fft.fftfreq(len(cofft) , d=1)
+    cofft=fft.rfft(arrMean)
+    cofFreq=fft.rfftfreq(len(cofft) , d=1)
     #cofrshift = fft.fftshift(cofFreq)
     #cofftshift = fft.fftshift(cofft)
     mod = np.absolute(cofft)**2
@@ -229,14 +225,14 @@ def graphSpettri5(acof1,afreq1,acof2,afreq2,acof3,afreq3,acof4,afreq4,acof5,afre
     ax3.plot(afreq3[:int(acof3.size/2)],np.absolute(acof3[:int(acof3.size/2)])**2,color='cyan')
     ax3.set_xscale('log')
     ax3.set_yscale('log')
-    ax3.set_ylabel('$|c_{FFT}|^2$ [$\mu g^2/m^6$]') #Migliora
+    ax3.set_ylabel('$|c_{FFT}|^2$')
     ax4.plot(afreq4[:int(acof4.size/2)],np.absolute(acof4[:int(acof4.size/2)])**2,color='midnightblue')
     ax4.set_xscale('log')
     ax4.set_yscale('log')
     ax5.plot(afreq5[:int(acof5.size/2)],np.absolute(acof5[:int(acof5.size/2)])**2,color='orchid')
     ax5.set_xscale('log')
     ax5.set_yscale('log')
-    ax5.set_xlabel('Frequenze')
+    ax5.set_xlabel('Frequenze [Hz]')
     fig.set_figheight(7)
     fig.set_figwidth(10)
     plt.show()
@@ -255,14 +251,14 @@ def graphSpettri5Per(acof1,afreq1,acof2,afreq2,acof3,afreq3,acof4,afreq4,acof5,a
     ax3.plot(1/afreq3[1:int(acof3.size/2)],np.absolute(acof3[1:int(acof3.size/2)])**2,color='cyan')
     ax3.set_xscale('log')
     ax3.set_yscale('log')
-    ax3.set_ylabel('$|c_{FFT}|^2$ [$\mu g^2/m^6$]')
+    ax3.set_ylabel('$|c_{FFT}|^2$')
     ax4.plot(1/afreq4[1:int(acof4.size/2)],np.absolute(acof4[1:int(acof4.size/2)])**2,color='midnightblue')
     ax4.set_xscale('log')
     ax4.set_yscale('log')
     ax5.plot(1/afreq5[1:int(acof5.size/2)],np.absolute(acof5[1:int(acof5.size/2)])**2,color='orchid')
     ax5.set_xscale('log')
     ax5.set_yscale('log')
-    ax5.set_xlabel('Periodi')
+    ax5.set_xlabel('Periodo [s]')
     fig.set_figheight(7)
     fig.set_figwidth(10)
     plt.show()
@@ -273,13 +269,12 @@ def graphSpettri5Per(acof1,afreq1,acof2,afreq2,acof3,afreq3,acof4,afreq4,acof5,a
 def trInv(coff, fil, mean):
     #funzione che mi restituisce la trasformata inversa con i coeff filtrati in ordine:
     #coff array spettro,fil valore di soglia,mean medie giornaliere
-    
     mask = np.absolute(coff)**2 < fil
     cofFil = coff.copy()
     cofFil[mask] = 0
-    arrFil = fft.ifft(cofFil, n=len(mean))
+    arrFil = fft.irfft(cofFil, n=len(mean))
     return arrFil
-
+#Decidi se immaginari o no, dimezza i periodi in stati e stazioni
 
 def graphFil(data1,amean1,afil1,data2,amean2,afil2,data3,amean3,afil3,data4,amean4,afil4,title):
     #Crea grafici dei dati filtrati rispetto agli originali

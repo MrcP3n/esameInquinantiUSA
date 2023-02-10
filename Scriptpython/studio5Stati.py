@@ -113,24 +113,30 @@ if False:
 
 '''Filtri'''
 #sistema valori di soglia
-FilCT1=f.trInv(coffCT1,1e5,CT1Mean)
-FilCT2=f.trInv(coffCT2,1e5,CT2Mean)
-FilCT3=f.trInv(coffCT3,1e5,CT3Mean)
-FilNY8=f.trInv(coffNY8,1e6,NY8Mean)
-FilNY9=f.trInv(coffNY9,1e6,NY9Mean)
-FilPA13=f.trInv(coffPA13,2e6,PA13Mean)
-FilPA15=f.trInv(coffPA15,2e6,PA15Mean)
-FilPA20=f.trInv(coffPA20,2e6,PA20Mean)
-FilPA24=f.trInv(coffPA24,2e6,PA24Mean)#togli una di PA
-FilVA29=f.trInv(coffVA29,5e7,VA29Mean)#togli una di VA
-FilVA31=f.trInv(coffVA31,5e7,VA31Mean)
-FilVA33=f.trInv(coffVA33,5e7,VA33Mean)
-FilVA34=f.trInv(coffVA34,5e7,VA34Mean)
-FilMD5=f.trInv(coffMD5,2e6,MD5Mean)
+FilCT1=f.trInv(coffCT1,0.3,CT1Mean)
+FilCT2=f.trInv(coffCT2,0.3,CT2Mean)
+FilCT3=f.trInv(coffCT3,0.3,CT3Mean)
+FilNY8=f.trInv(coffNY8,0.45,NY8Mean)#0.5 sinu
+FilNY9=f.trInv(coffNY9,0.45,NY9Mean)
+FilPA13=f.trInv(coffPA13,0.25,PA13Mean)
+FilPA15=f.trInv(coffPA15,0.2,PA15Mean)
+FilPA20=f.trInv(coffPA20,0.3,PA20Mean)
+FilPA24=f.trInv(coffPA24,0.25,PA24Mean)
+FilVA29=f.trInv(coffVA29,0.1,VA29Mean)#togli una di PA
+FilVA31=f.trInv(coffVA31,0.2,VA31Mean)
+FilVA33=f.trInv(coffVA33,0.1,VA33Mean)#togli una di VA
+FilVA34=f.trInv(coffVA34,0.15,VA34Mean)
+FilMD5=f.trInv(coffMD5,0.2,MD5Mean)
 
 '''Dati originali rispetto a filtrati'''
-
-
+if False:
+    title='Grafico dati originali e filtrati di CT1,CT2,CT3 e NY8'
+    f.graphFil(CT1Date,CT1Mean,FilCT1,CT2Date,CT2Mean,FilCT2,CT3Date,CT3Mean,FilCT3,NY8Date,NY8Mean,FilNY8,title)
+    title='Grafico dati originali e filtrati di NY9,PA13,PA15 e PA24'
+    f.graphFil(NY9Date,NY9Mean,FilNY9,PA13Date,PA13Mean,FilPA13,PA15Date,PA15Mean,FilPA15,PA24Date,PA24Mean,FilPA24,title)
+    title='Grafico dati originali e filtrati di VA29,VA31,VA34 e MD5'
+    f.graphFil(VA29Date,VA29Mean,FilVA29,VA31Date,VA31Mean,FilVA31,VA34Date,VA34Mean,FilVA34,MD5Date,MD5Mean,FilMD5,title)
+    
 
 '''Rumori'''
 if False:
@@ -143,3 +149,4 @@ if False:
     
     '''Individua tipo di rumore con funzione'''
 
+'''In analogia alla luce bianca che è formata dalla sovrapposizione di onde elettromagnetiche di tutte le frequenze visibili, se un rumore è costituito da uno spettrogramma sostanzialmente "piatto" con onde di tutte le frequenze e di intensità simile ad ogni frequenza, esso si dice rumore bianco. Il rumore bianco, ricco di alte frequenze suona "stridulo", ha un eccesso di brillantezza che ci infastidisce'''
