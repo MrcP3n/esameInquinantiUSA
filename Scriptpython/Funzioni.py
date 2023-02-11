@@ -8,18 +8,15 @@ import Classi
 
 
 def getRilevaz5(path):
-
-    #Funzione legge file e restituisce array di stazioni
+    #Funzione legge file e restituisce array di rilevazioni
     df=pd.read_csv(path)
-    #df['date5Stati']=pd.to_datetime(df['date5Stati'], format = '%Y-%m-%d')
     staz = np.array([Classi.rilevazione( r['c5Stati'], r['cContea5'], r['nSit5'],r['date5Stati'],r['O3mean5Stati'] ) for i, r in df.iterrows() ])
 
     return staz
 
 def getRilevaz(path):
-    #Funzione legge file e restituisce array di stazioni
+    #Funzione legge file e restituisce array di rilevazione
     df=pd.read_csv(path)
-    #df['date5Stati']=pd.to_datetime(df['date5Stati'], format = '%Y-%m-%d')
     staz = np.array([Classi.rilStat( r['cStati'], r['cContea'], r['nSit'],r['dateTot'],r['O3meanTot'] ) for i, r in df.iterrows() ])
 
     return staz
@@ -88,7 +85,7 @@ riesco ad aggiungere le rilevazioni nel giusto stato facendo scorrere gli indici
             
         codePrecStato = h.cStato     
             
-    return stati ,arrCod
+    return stati 
 
 def takeArr(staz):
     average = np.empty(0)
@@ -113,7 +110,7 @@ def meanDay(stato):
     '''
     Codice che prende un solo dato giornaliero facendo 
     la media dei dati nell' intervallo in cui si ripetono i dati, ricavo la
-    ripetizione con rip e rip1 e li sfrutto in un altro ciclo per completar    e l' operazione
+    ripetizione con rip e rip1 e li sfrutto in un altro ciclo per completare l' operazione
     '''
     for h in stato.arrRil:
         aMeanday = np.append(aMeanday ,h.mean)
@@ -124,7 +121,7 @@ def meanDay(stato):
             date=np.append(date,aDate[i])
             rip=np.append(rip,(i+1)-j)
             break
-            
+            #Decidi se lasciare il break
         if(aDate[i]!=aDate[i+1]):
             date=np.append(date,aDate[i])
             rip=np.append(rip,i-j)
@@ -161,9 +158,9 @@ def graphInTime2(arrx1,arry1,arrx2,arry2,title,cl):
     ax1.plot(arrx1, arry1, color=cl)
     ax2.plot(arrx2, arry2, color=cl)
     ax1.set_xlabel('Date')
-    ax1.set_ylabel('Media Ozono')
+    ax1.set_ylabel('Media Ozono [ppm]')
     ax2.set_xlabel('Date')
-    ax2.set_ylabel('Media Ozono')
+    ax2.set_ylabel('Media Ozono [ppm]')
     ax1.xaxis.set_major_locator(MultipleLocator(30))
     ax1.xaxis.set_minor_locator(MultipleLocator(5))
     ax2.xaxis.set_major_locator(MultipleLocator(30))
@@ -186,7 +183,7 @@ def graphInTime5(arrx1,arry1,arrx2,arry2,arrx3,arry3, arrx4,arry4,arrx5,arry5,ti
     ax1.xaxis.set_minor_locator(MultipleLocator(5))
     ax2.xaxis.set_major_locator(MultipleLocator(30))
     ax2.xaxis.set_minor_locator(MultipleLocator(5))
-    ax3.set_ylabel('Ozono [ppm]')
+    ax3.set_ylabel('Media Ozono [ppm]')
     ax3.xaxis.set_major_locator(MultipleLocator(30))
     ax3.xaxis.set_minor_locator(MultipleLocator(5))
     ax4.xaxis.set_major_locator(MultipleLocator(30))
@@ -204,6 +201,7 @@ def graphInTime5(arrx1,arry1,arrx2,arry2,arrx3,arry3, arrx4,arry4,arrx5,arry5,ti
 
 def trFour_freq(arrMean):
     #sNyqu=0.5
+    #Decidi se usare sNyqu
     cofft=fft.rfft(arrMean)
     cofFreq=fft.rfftfreq(len(cofft) , d=1)
     #cofrshift = fft.fftshift(cofFreq)
@@ -216,7 +214,7 @@ def trFour_freq(arrMean):
 def graphSpettri5(acof1,afreq1,acof2,afreq2,acof3,afreq3,acof4,afreq4,acof5,afreq5,title):
     fig, (ax1,ax2,ax3,ax4,ax5) = plt.subplots(5)
     fig.suptitle(title)
-    ax1.plot(afreq1[1:int(acof1.size/2)],np.absolute(acof1[1:int(acof1.size/2)])**2,color='red')
+    ax1.plot(afreq1[1:int(acof1.size/2)],np.absolute(acof1[1:int(acof1.size/2)])**2,color='firebrick')
     ax1.set_xscale('log')
     ax1.set_yscale('log')
     ax2.plot(afreq2[:int(acof2.size/2)],np.absolute(acof2[:int(acof2.size/2)])**2,color='limegreen')
@@ -266,9 +264,20 @@ def graphSpettri5Per(acof1,afreq1,acof2,afreq2,acof3,afreq3,acof4,afreq4,acof5,a
     return
 
 
+def correlazione(mean1,mean2):
+    df=pd.DataFrame()
+    df['Ozono medio 1']=mean1
+    df['Ozono medio 2']=mean2
+    
+    return df.corr()
+
+
+
+
 def trInv(coff, fil, mean):
-    #funzione che mi restituisce la trasformata inversa con i coeff filtrati in ordine:
-    #coff array spettro,fil valore di soglia,mean medie giornaliere
+    '''
+    funzione che mi restituisce la trasformata inversa con i coeff filtrati in ordine:
+    coff array spettro,fil valore di soglia,mean medie giornaliere'''
     mask = np.absolute(coff)**2 < fil
     cofFil = coff.copy()
     cofFil[mask] = 0
@@ -277,24 +286,29 @@ def trInv(coff, fil, mean):
 #Decidi se immaginari o no, dimezza i periodi in stati e stazioni
 
 def graphFil(data1,amean1,afil1,data2,amean2,afil2,data3,amean3,afil3,data4,amean4,afil4,title):
-    #Crea grafici dei dati filtrati rispetto agli originali
+    '''Crea grafici dei dati filtrati rispetto agli originali'''
     fig, (ax1,ax2,ax3,ax4) = plt.subplots(4)
     fig.suptitle(title)
-    ax1.plot(data1,amean1 , color='red')
-    ax1.plot(data1,afil1 ,color='chocolate')
-    ax2.plot(data2,amean2 , color='limegreen')
-    ax2.plot(data2,afil2 ,color='cyan')
-    ax3.plot(data3,amean3 , color='midnightblue')
-    ax3.plot(data3,afil3 ,color='black')
-    ax4.plot(data4,amean4 , color='orchid')
-    ax4.plot(data4,afil4 ,color='cornflowerblue')
+    ax1.plot(data1,amean1,color='red',label='Dati originali')
+    ax1.plot(data1,afil1,color='chocolate',label='Dati filtrati')
+    ax1.legend( loc='upper center',fontsize=7)
+    ax2.plot(data2,amean2,color='limegreen',label='Dati originali')
+    ax2.plot(data2,afil2,color='cyan',label='Dati filtrati')
+    ax2.legend( loc='upper center',fontsize=7)
+    ax3.plot(data3,amean3,color='midnightblue',label='Dati originali')
+    ax3.plot(data3,afil3 ,color='y',label='Dati filtrati')
+    ax3.legend( loc='upper center',fontsize=7)
+    ax4.plot(data4,amean4,color='orchid',label='Dati originali')
+    ax4.plot(data4,afil4 ,color='cornflowerblue',label='Dati filtrati')
+    ax4.legend( loc='upper center',fontsize=7)
     ax1.xaxis.set_major_locator(MultipleLocator(30))
     ax1.xaxis.set_minor_locator(MultipleLocator(5))
     ax2.xaxis.set_major_locator(MultipleLocator(30))
     ax2.xaxis.set_minor_locator(MultipleLocator(5))
+    ax2.set_ylabel('Ozono [ppm]')
     ax3.xaxis.set_major_locator(MultipleLocator(30))
     ax3.xaxis.set_minor_locator(MultipleLocator(5))
-    ax3.set_ylabel('Ozono')#Migliora
+    ax3.set_ylabel('Ozono [ppm]')
     ax4.xaxis.set_major_locator(MultipleLocator(30))
     ax4.xaxis.set_minor_locator(MultipleLocator(5))
     ax4.set_xlabel('Date')
@@ -302,7 +316,7 @@ def graphFil(data1,amean1,afil1,data2,amean2,afil2,data3,amean3,afil3,data4,amea
     fig.set_figwidth(10)
     plt.savefig(title)
     plt.show()
-    
+  
     return
 
 
@@ -319,7 +333,7 @@ def graphRumori(data1,amean1,afil1,data2,amean2,afil2,data3,amean3,afil3,data4,a
     ax2.xaxis.set_minor_locator(MultipleLocator(5))
     ax3.xaxis.set_major_locator(MultipleLocator(30))
     ax3.xaxis.set_minor_locator(MultipleLocator(5))
-    ax3.set_ylabel('Differenza')#Migliora
+    ax3.set_ylabel('Differenza Ozono originale e filtrato [ppm]')#??
     ax4.xaxis.set_major_locator(MultipleLocator(30))
     ax4.xaxis.set_minor_locator(MultipleLocator(5))
     ax4.set_xlabel('Date')
