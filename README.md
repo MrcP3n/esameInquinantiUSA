@@ -21,6 +21,6 @@ Il secondo è identico al primo ma con tutti gli stati che hanno delle rilevazio
 
 ## Esecuzione:
 
-1)Non è necessario eseguire *elaborazioneDati.py* in quanto i file sono già stati salvati nella cartella apposita Dati progetto
+1) Non è necessario eseguire *elaborazioneDati.py* in quanto i file sono già stati salvati nella cartella apposita Dati progetto
 
-2)Eseguire nell' ordine che si preferisce *studioStati.py* o *studio5Stati.py* per visualizzare grafici e tabelle relativi all' analisi dati richiesta
+2) Eseguire nell' ordine che si preferisce *studioStati.py* o *studio5Stati.py* per visualizzare grafici e tabelle relativi all' analisi dati richiesta
