@@ -8,12 +8,12 @@ Il progetto ha come scopo quello di analizzare l' inquinante Ozono (O3) negli US
 ## Descrizione codice
 
 1) Prima di tutto è stato creato uno script *elaborazioneDati.py* per estrarre un solo dato al giorno di O3:
-Questo script crea due nuovi file csv  *dati5Stati.csv* e *datiStati.csv*; Il primo che ha solo i dati relativi alle stazioni dei 5 stati contigu in particolare: codice dello stato della contea e della stazione , data e media giornaliera corrispondente
-Il secondo è identico al primo ma con tutti gli stati che hanno delle rilevazioni
+Questo script crea due nuovi file csv  *dati5Stati.csv* e *datiStati.csv*; Il primo che ha solo i dati relativi delle stazioni dei 5 stati contigui mentre particolare: codice dello stato della contea e della stazione , data e media giornaliera corrispondente
+il secondo è identico al primo ma con tutti gli stati che hanno delle rilevazioni
 
-2) Lo script *Classi.py* è quello in cui sono definite la classi rilevazione,stazione,rilStato e Stato che implementa gli oggetti e i rispettivi metodi.
+2) Lo script *Classi.py* è quello in cui sono definite la classi rilevazione,stazione,rilStato e stato ed implementa gli oggetti e i rispettivi metodi.
 
-3) *Funzioni.py* è  il codice dove sono scritte appunto tutte le funzioni utilizzate durante l' analisi e per l' estrazione di rilevazioni, stazioni e stati 
+3) *Funzioni.py* è  il codice dove sono scritte tutte le funzioni utilizzate durante l' analisi e per l' estrazione di rilevazioni, stazioni e stati 
 
 4) *studio5Stati.py* è lo script relativo a tutta l' analisi dati delle stazioni dei 5 stati contigui
 
