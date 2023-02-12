@@ -23,8 +23,6 @@ class rilevazione:
         return self.data > other.data
 
 
-
-    
     
 class stazione():
 
@@ -48,7 +46,6 @@ class stazione():
         self.cStato = cStato
           
 
-        
 
 class rilStat():
     def __init__(self,cStato,cContea,cStaz,data,mean):
@@ -62,7 +59,7 @@ class rilStat():
         return self.data==other.data
  
     def __lt__(self,other):
-        return self.data   < other.data   
+        return self.data  < other.data   
     
     def __gt__(self,other):
         return self.data > other.data
@@ -89,4 +86,3 @@ class stato():
         cStato=int(r.cStato)
         self.cStato = cStato
 
-   

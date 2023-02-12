@@ -11,78 +11,50 @@ pstati='/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiStati.csv'
 rilStati=f.getRilevaz(pstati)
 
 rilStati.sort(kind='mergesort')
-#print(ril5Stati)
+
 '''
 for h in rilStati:
     print(h.cStato, h.cContea, h.cStaz, h.data, h.mean)
 '''
 print('Numero totale di rilevazioni:', rilStati.size)
-'''
-stazStati=f.getStazioni(rilStati)
-stazStati.sort(kind='mergesort')
 
-
-for hh in stazStati[0].arrRil:
-    print(hh.cStato, hh.cContea , hh.cStaz, hh.data ,hh.mean)
-
-for i in range(141):
-    print('-----Stazione{:}------'.format(i))
-    print('nRilevazioni', stazStati[i].nril)
-
-print('Numero totale di stazioni: ', stazStati.size)
-'''
 stati=f.getStati(rilStati)
 stati.sort(kind='mergesort')
-
 
 '''
 for hh in stati[0].arrRil:
     print(hh.cStato,hh.data,hh.mean)
 
-
-for i in range(34):
-    print('-----Stato{:}------'.format(i))
-    print('nRil', stati[i].nril)
 '''
+
 print('Numero totale di stati: ',stati.size)
 print('------------------------')
 
-#np.set_printoptions(threshold=sys.maxsize)
-'''Creo array per ogni stato'''
+np.set_printoptions(threshold=sys.maxsize)
+'''Creo array per ogni stato selezionando quelli
+   che hanno almeno circa 900 dati'''
 
-meanO3AZ , dateAZ,arr  =f.meanDay(stati[0])
-meanO3CA , dateCA,arr1  =f.meanDay(stati[2])
+meanO3AZ , dateAZ  =f.meanDay(stati[0])
+meanO3CA , dateCA  =f.meanDay(stati[2])
 meanO3CA=np.append(meanO3CA,0.01672)
-meanO3CT , dateCT,arr =f.meanDay(stati[4])
-meanO3DC , dateDC ,arr =f.meanDay(stati[5])
-meanO3FL , dateFL ,arr =f.meanDay(stati[6])
-meanO3IL , dateIL ,arr =f.meanDay(stati[9])
-#meanO3IA , dateIA ,arr =f.meanDay(stati[11])#????700
-meanO3ME , dateME ,arr =f.meanDay(stati[14])
-meanO3MD , dateMD ,arr =f.meanDay(stati[15])
-meanO3MA , dateMA ,arr =f.meanDay(stati[16])
-#meanO3NH , dateNH ,arr =f.meanDay(stati[19])#???717
-meanO3NY , dateNY ,arr =f.meanDay(stati[21])
-meanO3NC , dateNC ,arr =f.meanDay(stati[22])
-meanO3ND , dateND ,arr =f.meanDay(stati[23])
-meanO3OK , dateOK ,arr =f.meanDay(stati[25])
-meanO3OR , dateOR ,arr =f.meanDay(stati[26])
-meanO3PA , datePA ,arr =f.meanDay(stati[27])
-meanO3SC , dateSC ,arr =f.meanDay(stati[28])#843
-#meanO3TN , dateTN ,arr =f.meanDay(stati[29])#???681
-meanO3TX , dateTX ,arr =f.meanDay(stati[30])
-#meanO3VA , dateVA ,arr =f.meanDay(stati[31])#795
-
-'''
-print('dateCA',' Lunghezza ',len(meanO3OR))
-print('meanO3CA',' Lunghezza ',len(meanO3PA))
-print( 'arr1'  ,' Lunghezza ',len(meanO3SC))
-'''
-
-
+meanO3CT , dateCT =f.meanDay(stati[4])
+meanO3DC , dateDC =f.meanDay(stati[5])
+meanO3FL , dateFL =f.meanDay(stati[6])
+meanO3IL , dateIL =f.meanDay(stati[9])
+meanO3ME , dateME =f.meanDay(stati[14])
+meanO3MD , dateMD =f.meanDay(stati[15])
+meanO3MA , dateMA =f.meanDay(stati[16])
+meanO3NY , dateNY =f.meanDay(stati[21])
+meanO3NC , dateNC =f.meanDay(stati[22])
+meanO3ND , dateND =f.meanDay(stati[23])
+meanO3OK , dateOK =f.meanDay(stati[25])
+meanO3OR , dateOR =f.meanDay(stati[26])
+meanO3PA , datePA =f.meanDay(stati[27])
+meanO3SC , dateSC =f.meanDay(stati[28])#843
+meanO3TX , dateTX =f.meanDay(stati[30])
 
 '''Andamento Temporale'''
-if False:
+if True:
     #WEST COAST AND CENTER
     title='Andamenti Oregon, California, Arizona, Texas, Oklahoma'
     f.graphInTime5(dateOR,meanO3OR,dateCA,meanO3CA,dateAZ,meanO3AZ,dateTX,meanO3TX,dateOK,meanO3OK,title)
@@ -95,11 +67,23 @@ if False:
     title='Andamenti Connecticut, Pennsylvania, North Carolina, South Carolina, Florida'
     f.graphInTime5(dateFL,meanO3FL,dateIL,meanO3IL,dateDC,meanO3DC,dateND,meanO3ND,dateNC,meanO3NC,title)
     #GENERALE
-    title='Andamenti Oregon, Pennsylvania, North Dakota, South Carolina, Illinois'#Cali al posto di illi
-    f.graphInTime5(dateOR,meanO3OR,datePA,meanO3PA,dateND,meanO3ND,dateSC,meanO3SC,dateIL,meanO3IL,title)    
-    
+    title='Andamenti Oregon, Pennsylvania, North Dakota, South Carolina, California'
+    f.graphInTime5(dateOR,meanO3OR,datePA,meanO3PA,dateND,meanO3ND,dateSC,meanO3SC,dateCA,meanO3CA,title)    
 
-'''Trasformate e frequenze '''
+'''CORRELAZIONE'''
+
+columns=np.array(['CT','MD','NY','PA','MA'])
+tabEast=f.correlazione(meanO3CT,meanO3MD,meanO3NY,meanO3PA,meanO3MA,columns,0)
+columns=np.array(['AZ','CA','OR','TX','NY'])
+tabWestCent=f.correlazione(meanO3AZ,meanO3CA,meanO3OR,meanO3TX,meanO3NY,columns,1)
+columns=np.array(['CA','PA','ND','FL','TX'])
+tabGen=f.correlazione(meanO3CA,meanO3PA,meanO3ND,meanO3FL,meanO3TX,columns,1)
+print(tabEast)
+print(tabWestCent)
+print(tabGen)
+
+'''Trasformate di fourier, estrazione frequenze e mx '''
+
 coffAZ , cofFreqAZ , maxAZ = f.trFour_freq(meanO3AZ)
 coffCA , cofFreqCA , maxCA = f.trFour_freq(meanO3CA)
 coffCT , cofFreqCT , maxCT = f.trFour_freq(meanO3CT)
@@ -118,8 +102,9 @@ coffPA , cofFreqPA , maxPA = f.trFour_freq(meanO3PA)
 coffSC , cofFreqSC , maxSC = f.trFour_freq(meanO3SC)
 coffTX , cofFreqTX , maxTX = f.trFour_freq(meanO3TX)
 
-'''Spettri'''
-if False:
+'''SPETTRI'''
+
+if True:
     #WEST COAST AND CENTER
     title='Spettri Oregon, California, Arizona, Texas, Oklahoma'
     f.graphSpettri5(coffOR , cofFreqOR,coffCA , cofFreqCA,coffAZ , cofFreqAZ,coffTX , cofFreqTX,coffOK , cofFreqOK,title)
@@ -133,12 +118,13 @@ if False:
     title='Spettri Connecticut, New York, North Carolina, South Carolina, Florida'
     f.graphSpettri5(coffCT , cofFreqCT,coffNY , cofFreqNY,coffNC , cofFreqNC,coffSC , cofFreqSC,coffFL , cofFreqFL,title)
     #GENERALE
-    title='Spettro Oregon, Pennsylvania, North Dakota, South Carolina, Illinois'#Cali al posto di illi
-    f.graphSpettri5(coffOR , cofFreqOR,coffPA , cofFreqPA,coffND , cofFreqND,coffSC , cofFreqSC,coffIL , cofFreqIL,title)   
+    title='Spettro Oregon, Pennsylvania, North Dakota, South Carolina, California'
+    f.graphSpettri5(coffOR , cofFreqOR,coffPA , cofFreqPA,coffND , cofFreqND,coffSC , cofFreqSC,coffCA , cofFreqCA,title)   
 
 
-'''Periodicità'''
+'''PERIODICITÀ'''
 if True:
+    print('------------------------------------------------------')
     print('Stato AZ: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffAZ[maxAZ])**2, cofFreqAZ[maxAZ], 1/cofFreqAZ[maxAZ]))
     print('Stato CA: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffCA[maxCA])**2, cofFreqCA[maxCA], 1/cofFreqCA[maxCA]))
     print('Stato CT: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffCT[maxCT])**2, cofFreqCT[maxCT], 1/cofFreqCT[maxCT]))
@@ -157,57 +143,60 @@ if True:
     print('Stato SC: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffSC[maxSC])**2, cofFreqSC[maxSC], 1/cofFreqSC[maxSC]))
     print('Stato TX: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(np.absolute(coffTX[maxTX])**2, cofFreqTX[maxTX], 1/cofFreqTX[maxTX]))
 
-if False:
-    #EAST COAST
-    title='Spettro di potenza dei 5 stati nella East Coast in funzione del periodo'
-    f.graphSpettri5Per(coffME , cofFreqME,coffMD , cofFreqMD,coffMA , cofFreqMA,coffPA , cofFreqPA,coffNY , cofFreqNY,title)
+if True:
     #WEST COAST E CENTER
-    title='Spettro di potenza dei 5 stati nella West Coast  Centro e in funzione del periodo'
+    title='Spettro di potenza dei 5 stati Oregon, California, Arizona, Texas, Oklahoma in funzione del Periodo'
     f.graphSpettri5Per(coffOR , cofFreqOR,coffCA , cofFreqCA,coffAZ , cofFreqAZ,coffTX , cofFreqTX,coffOK , cofFreqOK,title)
-    #TUTTI SPARSI
-    title='Spettro di potenza dei 5 stati in zone differenti in funzione del periodo'
-    f.graphSpettri5Per(coffOR , cofFreqOR,coffPA , cofFreqPA,coffND , cofFreqND,coffSC , cofFreqSC,coffIL , cofFreqIL,title)
+    #EAST COAST
+    title='Spettro di potenza Maine, Maryland, Massachusetts, Pennsylvania, New York in funzione del periodo'
+    f.graphSpettri5Per(coffME , cofFreqME,coffMD , cofFreqMD,coffMA , cofFreqMA,coffPA , cofFreqPA,coffNY , cofFreqNY,title)
      #EAST COAST E CENTER
-    title='Spettri di potenza di 5 stati nella East Coast e al centro in funzionde del periodo'
-    f.graphSpettri5(coffFL , cofFreqFL,coffIL , cofFreqIL,coffDC , cofFreqDC,coffND , cofFreqND,coffNC , cofFreqNC,title)
+    title='Spettri di potenza  Florida, Illinois, District of columbia, North Dakota, North Carolina in funzione del periodo'
+    f.graphSpettri5Per(coffFL , cofFreqFL,coffIL , cofFreqIL,coffDC , cofFreqDC,coffND , cofFreqND,coffNC , cofFreqNC,title)
     #EAST COAST E CENTER
-    title='Spettri di potenza di 5 stati nella East Coast e al centro in funzionde del periodo'
-    f.graphSpettri5(coffCT , cofFreqCT,coffNY , cofFreqNY,coffNC , cofFreqNC,coffSC , cofFreqSC,coffFL , cofFreqFL,title)
+    title='Spettri di potenza Connecticut, New York, North Carolina, South Carolina, Florida in funzionde del periodo'
+    f.graphSpettri5Per(coffCT , cofFreqCT,coffNY , cofFreqNY,coffNC , cofFreqNC,coffSC , cofFreqSC,coffFL , cofFreqFL,title)    
+    #TUTTI SPARSI
+    title='Spettro di potenza  Oregon, Pennsylvania, North Dakota, South Carolina, California in funzione del periodo'
+    f.graphSpettri5Per(coffOR , cofFreqOR,coffPA , cofFreqPA,coffND , cofFreqND,coffSC , cofFreqSC,coffCA , cofFreqCA,title)
+
 
 '''FILTRI '''
 
-filAZ=f.trInv(coffAZ,0.3,meanO3AZ)
-filCA=f.trInv(coffCA,0.7,meanO3CA)
-filCT=f.trInv(coffCT,0.6,meanO3CT)
-filDC=f.trInv(coffDC,0.4,meanO3DC)
-filFL=f.trInv(coffFL,0.5,meanO3FL)
-filIL=f.trInv(coffIL,0.4,meanO3IL)
-filME=f.trInv(coffME,0.5,meanO3ME)
-filMD=f.trInv(coffMD,1,meanO3MD)
-filMA=f.trInv(coffMA,1,meanO3MA)
-filNY=f.trInv(coffNY,0.4,meanO3NY)
-filNC=f.trInv(coffNC,1,meanO3NC)
-filND=f.trInv(coffND,1,meanO3ND)
-filOK=f.trInv(coffOK,0.5,meanO3OK)
-filOR=f.trInv(coffOR,1,meanO3OR)
-filPA=f.trInv(coffPA,1,meanO3PA)
-filTX=f.trInv(coffTX,0.4,meanO3TX)
+filAZ=f.trInv(coffAZ,cofFreqAZ,0.008,meanO3AZ)
+filCA=f.trInv(coffCA,cofFreqCA,0.011,meanO3CA)
+filCT=f.trInv(coffCT,cofFreqCT,0.0066,meanO3CT)
+filDC=f.trInv(coffDC,cofFreqDC,0.011,meanO3DC)
+filFL=f.trInv(coffFL,cofFreqFL,0.0066,meanO3FL)
+filIL=f.trInv(coffIL,cofFreqIL,0.011,meanO3IL)
+filME=f.trInv(coffME,cofFreqME,0.009,meanO3ME)
+filMD=f.trInv(coffMD,cofFreqMD,0.008,meanO3MD)
+filMA=f.trInv(coffMA,cofFreqMA,0.006,meanO3MA)
+filNY=f.trInv(coffNY,cofFreqNY,0.008,meanO3NY)
+filNC=f.trInv(coffNC,cofFreqNC,0.008,meanO3NC)
+filND=f.trInv(coffND,cofFreqND,0.009,meanO3ND)
+filOK=f.trInv(coffOK,cofFreqOK,0.008,meanO3OK)
+filOR=f.trInv(coffOR,cofFreqOR,0.009,meanO3OR)
+filPA=f.trInv(coffPA,cofFreqPA,0.008,meanO3PA)
+filTX=f.trInv(coffTX,cofFreqTX,0.007,meanO3TX)
 
 
 '''Dati originali rispetto a filtrati'''
-if False:
+
+if True:
     title='Grafico dati e dati filtrati a confronto per AZ CA CT e DC'
     f.graphFil(dateAZ,meanO3AZ,filAZ,dateCA,meanO3CA,filCA,dateCT,meanO3CT,filCT,dateDC,meanO3DC,filDC,title)
-    
     title='Grafico dati e dati filtrati a confronto per FL IL ME e MD'
     f.graphFil(dateFL,meanO3FL,filFL,dateIL,meanO3IL,filIL,dateME,meanO3ME,filME,dateMD,meanO3MD,filMD,title)
     title='Grafico dati e dati filtrati a confronto per MA NY NC e ND'
     f.graphFil(dateMA,meanO3MA,filMA,dateNY,meanO3NY,filNY,dateNC,meanO3NC,filNC,dateND,meanO3ND,filND,title)
     title='Grafico dati e dati filtrati a confronto per OK OR PA e TX'
     f.graphFil(dateOK,meanO3OK,filOK,dateOR,meanO3OR,filOR,datePA,meanO3PA,filPA,dateTX,meanO3TX,filTX,title)
+
     
 '''RUMORI'''
-if False:
+
+if True:
     title='Grafico andamento della differenza tra dati originali e filtrati degli stati AZ CA CT e DC'
     f.graphRumori(dateAZ,meanO3AZ,filAZ,dateCA,meanO3CA,filCA,dateCT,meanO3CT,filCT,dateDC,meanO3DC,filDC,title)
     title='Grafico andamento della differenza tra dati originali e filtrati degli stati FL IL ME e MD'
@@ -219,9 +208,9 @@ if False:
 
 
 
-'''Che tipo di rumore è'''
+'''Individuazione tipo di rumore'''
 
-if False:    
+if True:    
     cofdiffAZ,freqdiffAZ,maxdiffAZ=f.trFour_freq(meanO3AZ-filAZ)
     cofdiffCA,freqdiffCA,maxdiffCA=f.trFour_freq(meanO3CA-filCA)
     cofdiffCT,freqdiffCT,maxdiffCT=f.trFour_freq(meanO3CT-filCT)
@@ -237,11 +226,11 @@ if False:
     cofdiffOR,freqdiffOR,maxdiffOR=f.trFour_freq(meanO3OR-filOR)
     cofdiffPA,freqdiffPA,maxdiffPA=f.trFour_freq(meanO3PA-filPA)
     cofdiffTX,freqdiffTX,maxdiffTX=f.trFour_freq(meanO3TX-filTX)    
-    title='Spettro rumori AZ CA CT DC e FL'
+    title='Spettro differenza di AZ, CA, CT, DC e FL'
     f.graphSpettri5(cofdiffAZ,freqdiffAZ,cofdiffCA,freqdiffCA,cofdiffCT,freqdiffCT,cofdiffDC,freqdiffDC,cofdiffFL,freqdiffFL,title)
-    title='Spettro rumori ME MD MA NY e ND'
+    title='Spettro differenza di ME, MD, MA, NY e ND'
     f.graphSpettri5(cofdiffME,freqdiffME,cofdiffMD,freqdiffMD,cofdiffMA,freqdiffMA,cofdiffNY,freqdiffNY,cofdiffND,freqdiffND,title)
-    title='Spettro rumori NC OK OR PA e TX'
+    title='Spettro rumori di NC, OK, OR, PA e TX'
     f.graphSpettri5(cofdiffNC,freqdiffNC,cofdiffOK,freqdiffOK,cofdiffOR,freqdiffOR,cofdiffPA,freqdiffPA,cofdiffTX,freqdiffTX,title)
 
-    '''Sembrano rumori bianchi spettro piatto tante frequenze piccole (Capisci bene texas probabilmente dovuto da filtro)'''
+

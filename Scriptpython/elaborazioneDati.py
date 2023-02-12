@@ -13,7 +13,7 @@ codStato=tab['State Code'].values
 codContea=tab['County Code'].values
 numSito=tab['Site Num'].values
 date=tab['Date Local'].values
-O3mean=tab['O3 Mean'].values  #parti per milione
+O3mean=tab['O3 Mean'].values  
 
 #Elaboro gli array per tutti gli stati
 
@@ -64,8 +64,8 @@ print(len(code5Stati),len(codeContee5),len(numSiti5),len(O3mean5Stati),len( date
 
 def creaDataFrame(arr1,arr2,arr3,arr4,arr5,Names):
     nomiColonne = {Names[0]:arr1,Names[1]:arr2,Names[2]:arr3,Names[3]:arr4,Names[4]:arr5}
-    mid_term_marks_df = pd.DataFrame(nomiColonne)
-    return mid_term_marks_df
+    df = pd.DataFrame(nomiColonne)
+    return df
 
 #creo dataframe e scrivo un file csv per Stati
 
@@ -75,7 +75,6 @@ print(dfstati)
 
 dfstati.to_csv("datiStati.csv")
 
-
 #creo dataframe e scrivo un file csv per 5 Stati contigui
 
 statiColumns=(["c5Stati","cContea5","nSit5","date5Stati","O3mean5Stati"])
@@ -83,59 +82,3 @@ df5stati=creaDataFrame(code5Stati,codeContee5,numSiti5,date5Stati,O3mean5Stati,s
 print(df5stati)
 
 df5stati.to_csv("dati5Stati.csv")
-
-#print(O3mean[120],O3mean[119],O3mean[123])
-'''
-NYcolumns=(["cStatoNY","cConteaNY","nSitNY","dateNY","O3meanNY"])
-dfNY=creaDataFrame(cStatoNY,cConteaNY,nSitNY,dateNY,O3meanNY,NYcolumns)
-print(dfNY)
-
-dfNY.to_csv("datiNY.csv")
-
-
-cStatoNY=np.empty(0)
-cConteaNY=np.empty(0)
-nSitNY=np.empty(0)
-O3meanNY=np.empty(0)
-dateNY=np.empty(0)
-i=1
-
-#Separo i dati di new york e prendo un valore di media al giorno
-
-for i in range(len(codStato)):
-    if(codStato[i]==36):
-        if(O3mean[i]!=O3mean[i+1]):
-            cStatoNY=np.append(cStatoNY,codStato[i])
-            cConteaNY=np.append(cConteaNY,codContea[i])
-            nSitNY=np.append(nSitNY,numSito[i])
-            dateNY=np.append(dateNY,date[i])
-            O3meanNY=np.append(O3meanNY,O3mean[i])
-        
-        
-print(cStatoNY,cConteaNY,nSitNY, dateNY,O3meanNY)
-print(len(cStatoNY),len(cConteaNY),len(nSitNY), len(dateNY),len(O3meanNY))
-
-
-
-'''
-'''
-def Scriviarr(arr1,arr2,arr3,arr4,arr5,path):
-    j=1
-    with open(path,'w',newline='') as file:
-        writer=csv.writer(file)
-        for j in range(len(arr1)):
-            writer.writerow([arr1[j],arr2[j],arr3[j],arr4[j],arr5[j]])
-
-    return True        
-'''
-
-'''
-#file NY
-
-#/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiNY.csv
-NY=Scriviarr(cStatoNY,cConteaNY,nSitNY,dateNY,O3meanNY,'/home/marco-ubu/esameInquinantiUSA/DatiProgetto/datiNY.csv')
-if(NY==True):
-    print('File NY scritto')
-
-
-

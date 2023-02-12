@@ -7,6 +7,10 @@ from matplotlib.ticker import (MultipleLocator,AutoMinorLocator)
 import Classi
 
 
+'''------------------------------
+   Funzioni per creare le classi
+   ------------------------------'''
+
 def getRilevaz5(path):
     #Funzione legge file e restituisce array di rilevazioni
     df=pd.read_csv(path)
@@ -28,9 +32,9 @@ def getStazioni(arRil):
     
     Due rilevazioni in stesso luogo, ril1 e ril2, sono raggruppati nella stessa stazione se:
        ril1.cStaz!=ril2.cStaz
-inoltre per evitare che rilevazione con lo stesso codice di stazione ma presa in luoghi differenti finiscano insieme a causa della ripetizioni di questi codici in luoghi differenti si aggiunge la seguente condizione:
+inoltre per evitare che rilevazione con lo stesso codice di stazione ma presa in luoghi differenti finiscano insieme a causa della ripetizione di questi codici in luoghi differenti, si aggiunge la seguente condizione:
        codeTest!=codePrecStatoContea
-  che controlla che le due rilevazioni abbiano la somma tra codice di contea e stato diversi  
+  che controlla che le due rilevazioni abbiano la somma tra codice di contea e stato diverse  
    '''
 
   stazioni = np.empty(0)
@@ -54,11 +58,11 @@ def getStati(arRil):
     '''
      Funzione che crea un array di Classi.stati a partire da un array ordinato di Classi.rilevaz (arrRil)
     
-    Due rilevazioni nello stesso stato, ril1 e ril2, sono raggruppati nella stessa stazione se:
+    Due rilevazioni nello stesso stato, ril1 e ril2, sono raggruppati nello stesso stato se:
        ril1.cStato==ril2.cStato
 inoltre per evitare che si crei a ogni cambio di anno un nuovo stato che corrisponderebbe ad uno già esistente introduco un array che avrà i codici degli stati esistenti, così facendo aggiungendo la condizione  
    h.cStati in arrCod
-riesco ad aggiungere le rilevazioni nel giusto stato facendo scorrere gli indici dell' array creato
+riesco ad aggiungere le rilevazioni nel giusto stato facendo scorrere gli indici dell ultimo array creato
     '''
     stati = np.empty(0)
     arrCod = np.empty(0)
@@ -87,6 +91,11 @@ riesco ad aggiungere le rilevazioni nel giusto stato facendo scorrere gli indici
             
     return stati 
 
+'''------------------------------
+   Funzioni per creare array da 
+   analizzare dalle classi
+   ------------------------------'''
+
 def takeArr(staz):
     average = np.empty(0)
     date = np.empty(0)
@@ -103,7 +112,6 @@ def meanDay(stato):
     rip=np.array([0])
     rip1=np.empty(0)
     j=0
-    g=0
     z=0
     arr=np.empty(0)
     aMediaDay=np.empty(0)
@@ -121,13 +129,11 @@ def meanDay(stato):
             date=np.append(date,aDate[i])
             rip=np.append(rip,(i+1)-j)
             break
-            #Decidi se lasciare il break
         if(aDate[i]!=aDate[i+1]):
             date=np.append(date,aDate[i])
             rip=np.append(rip,i-j)
             j=i
 
-          
     for i in range(len(rip)-1):
         if(i>0):
             rip1=np.append(rip1,rip1[i-1]+rip[i])
@@ -148,9 +154,14 @@ def meanDay(stato):
             m=statistics.mean(arr)
             aMediaDay=np.append(aMediaDay,m)
             arr=np.empty(0)
-            
-        
-    return aMediaDay , date ,rip1
+                    
+    return aMediaDay , date 
+
+
+'''------------------------------
+   Funzioni per l' analisi e la 
+   creazione di grafici
+   ------------------------------'''
 
 def graphInTime2(arrx1,arry1,arrx2,arry2,title,cl):
     fig, (ax1, ax2) = plt.subplots(2)
@@ -161,10 +172,10 @@ def graphInTime2(arrx1,arry1,arrx2,arry2,title,cl):
     ax1.set_ylabel('Media Ozono [ppm]')
     ax2.set_xlabel('Date')
     ax2.set_ylabel('Media Ozono [ppm]')
-    ax1.xaxis.set_major_locator(MultipleLocator(30))
-    ax1.xaxis.set_minor_locator(MultipleLocator(5))
-    ax2.xaxis.set_major_locator(MultipleLocator(30))
-    ax2.xaxis.set_minor_locator(MultipleLocator(5))
+    ax1.xaxis.set_major_locator(MultipleLocator(150))
+    ax1.xaxis.set_minor_locator(MultipleLocator(30))
+    ax2.xaxis.set_major_locator(MultipleLocator(150))
+    ax2.xaxis.set_minor_locator(MultipleLocator(30))
     fig.set_figheight(8)
     fig.set_figwidth(12)
     plt.savefig(title)
@@ -174,45 +185,42 @@ def graphInTime2(arrx1,arry1,arrx2,arry2,title,cl):
 def graphInTime5(arrx1,arry1,arrx2,arry2,arrx3,arry3, arrx4,arry4,arrx5,arry5,title):
     fig, (ax1,ax2,ax3,ax4,ax5) = plt.subplots(5)
     fig.suptitle(title)
-    ax1.plot(arrx1, arry1, color='red')
+    ax1.plot(arrx1, arry1, color='firebrick')
     ax2.plot(arrx2, arry2, color='limegreen')
     ax3.plot(arrx3, arry3, color='cyan')
     ax4.plot(arrx4, arry4, color='midnightblue')
     ax5.plot(arrx5, arry5, color='orchid')
-    ax1.xaxis.set_major_locator(MultipleLocator(30))
-    ax1.xaxis.set_minor_locator(MultipleLocator(5))
-    ax2.xaxis.set_major_locator(MultipleLocator(30))
-    ax2.xaxis.set_minor_locator(MultipleLocator(5))
+    ax1.xaxis.set_major_locator(MultipleLocator(150))
+    ax1.xaxis.set_minor_locator(MultipleLocator(30))
+    ax2.xaxis.set_major_locator(MultipleLocator(150))
+    ax2.xaxis.set_minor_locator(MultipleLocator(30))
     ax3.set_ylabel('Media Ozono [ppm]')
-    ax3.xaxis.set_major_locator(MultipleLocator(30))
-    ax3.xaxis.set_minor_locator(MultipleLocator(5))
-    ax4.xaxis.set_major_locator(MultipleLocator(30))
-    ax4.xaxis.set_minor_locator(MultipleLocator(5))
+    ax3.xaxis.set_major_locator(MultipleLocator(150))
+    ax3.xaxis.set_minor_locator(MultipleLocator(30))
+    ax4.xaxis.set_major_locator(MultipleLocator(150))
+    ax4.xaxis.set_minor_locator(MultipleLocator(30))
     ax5.set_xlabel('Date')
-    ax5.xaxis.set_major_locator(MultipleLocator(30))
-    ax5.xaxis.set_minor_locator(MultipleLocator(5))
+    ax5.xaxis.set_major_locator(MultipleLocator(150))
+    ax5.xaxis.set_minor_locator(MultipleLocator(30))
     fig.set_figheight(7)
     fig.set_figwidth(10)
     plt.savefig(title)
     plt.show()
-    #Prova legend
+    
     return
     
 
 def trFour_freq(arrMean):
-    #sNyqu=0.5
-    #Decidi se usare sNyqu
+    sNyqu=0.5
     cofft=fft.rfft(arrMean)
-    cofFreq=fft.rfftfreq(len(cofft) , d=1)
-    #cofrshift = fft.fftshift(cofFreq)
-    #cofftshift = fft.fftshift(cofft)
+    cofFreq=sNyqu*fft.rfftfreq(len(arrMean) , d=1)
     mod = np.absolute(cofft)**2
     maxi = np.argmax(mod[1:cofft.size//2])+1
     return cofft , cofFreq , maxi
 
 
 def graphSpettri5(acof1,afreq1,acof2,afreq2,acof3,afreq3,acof4,afreq4,acof5,afreq5,title):
-    fig, (ax1,ax2,ax3,ax4,ax5) = plt.subplots(5)
+    fig, (ax1,ax2,ax3,ax4,ax5) = plt.subplots(5,sharex=True)
     fig.suptitle(title)
     ax1.plot(afreq1[1:int(acof1.size/2)],np.absolute(acof1[1:int(acof1.size/2)])**2,color='firebrick')
     ax1.set_xscale('log')
@@ -238,7 +246,7 @@ def graphSpettri5(acof1,afreq1,acof2,afreq2,acof3,afreq3,acof4,afreq4,acof5,afre
     return
 
 def graphSpettri5Per(acof1,afreq1,acof2,afreq2,acof3,afreq3,acof4,afreq4,acof5,afreq5,title):
-    fig, (ax1,ax2,ax3,ax4,ax5) = plt.subplots(5)
+    fig, (ax1,ax2,ax3,ax4,ax5) = plt.subplots(5,sharex=True)
     fig.suptitle(title)
     ax1.plot(1/afreq1[1:int(acof1.size/2)],np.absolute(acof1[1:int(acof1.size/2)])**2,color='red')
     ax1.set_xscale('log')
@@ -264,29 +272,82 @@ def graphSpettri5Per(acof1,afreq1,acof2,afreq2,acof3,afreq3,acof4,afreq4,acof5,a
     return
 
 
-def correlazione(mean1,mean2):
+def correlazione(mean1,mean2,mean3,mean4,mean5,col,inter):
+    '''Funzione per ricavare una tabella di valori del coefficiente di correlazione
+       minimo e maschere necessarie a causa delle diverse lunghezze degli array'''
     df=pd.DataFrame()
-    df['Ozono medio 1']=mean1
-    df['Ozono medio 2']=mean2
+    minim=min(len(mean1),len(mean2),len(mean3),len(mean4),len(mean5))
+    if(minim!=len(mean1)):
+        if(inter==1):
+            mask=np.ones(len(mean1),dtype=bool)
+            mask[minim:len(mean1)]=False
+            mean1=mean1[mask,...]        
+        else:
+            mask=np.ones(len(mean1),dtype=bool)
+            mask[0:len(mean1)-minim]=False
+            mean1=mean1[mask,...]
+            
+    if(minim!=len(mean2)):
+        if(inter==1):
+            mask=np.ones(len(mean2),dtype=bool)
+            mask[minim:len(mean2)]=False
+            mean2=mean2[mask,...]
+        else:
+            mask=np.ones(len(mean2),dtype=bool)
+            mask[0:len(mean2)-minim]=False
+            mean2=mean2[mask,...]                
+
+    if(minim!=len(mean3)):
+        if(inter==1):
+            mask=np.ones(len(mean3),dtype=bool)
+            mask[minim:len(mean3)]=False
+            mean3=mean3[mask,...]
+        else:
+            mask=np.ones(len(mean3),dtype=bool)
+            mask[0:len(mean3)-minim]=False
+            mean3=mean3[mask,...]            
+        
+    if(minim!=len(mean4)):
+        if inter==1 :
+            mask=np.ones(len(mean4),dtype=bool)
+            mask[minim:len(mean4)]=False
+            mean4=mean4[mask,...]
+        else:
+            mask=np.ones(len(mean4),dtype=bool)
+            mask[0:len(mean4)-minim]=False
+            mean4=mean4[mask,...]
+            
+    if(minim!=len(mean5)):
+        if (inter==1) :
+            mask=np.ones(len(mean5),dtype=bool)
+            mask[minim:len(mean5)]=False
+            mean5=mean5[mask,...]
+        else:
+            mask=np.ones(len(mean5),dtype=bool)
+            mask[0:len(mean5)-minim]=False
+            mean5=mean5[mask,...]
+            
+    df[col[0]]=mean1
+    df[col[1]]=mean2
+    df[col[2]]=mean3
+    df[col[3]]=mean4
+    df[col[4]]=mean5
     
     return df.corr()
 
 
 
-
-def trInv(coff, fil, mean):
-    '''
-    funzione che mi restituisce la trasformata inversa con i coeff filtrati in ordine:
-    coff array spettro,fil valore di soglia,mean medie giornaliere'''
-    mask = np.absolute(coff)**2 < fil
+def trInv(coff,freq, fil, mean):
+    '''funzione che mi restituisce la trasformata inversa con i coeff filtrati in ordine:
+    freq array frequenze,fil valore di soglia,mean medie giornaliere'''
+    mask = freq > fil
     cofFil = coff.copy()
     cofFil[mask] = 0
     arrFil = fft.irfft(cofFil, n=len(mean))
     return arrFil
-#Decidi se immaginari o no, dimezza i periodi in stati e stazioni
+
 
 def graphFil(data1,amean1,afil1,data2,amean2,afil2,data3,amean3,afil3,data4,amean4,afil4,title):
-    '''Crea grafici dei dati filtrati rispetto agli originali'''
     fig, (ax1,ax2,ax3,ax4) = plt.subplots(4)
     fig.suptitle(title)
     ax1.plot(data1,amean1,color='red',label='Dati originali')
@@ -301,16 +362,16 @@ def graphFil(data1,amean1,afil1,data2,amean2,afil2,data3,amean3,afil3,data4,amea
     ax4.plot(data4,amean4,color='orchid',label='Dati originali')
     ax4.plot(data4,afil4 ,color='cornflowerblue',label='Dati filtrati')
     ax4.legend( loc='upper center',fontsize=7)
-    ax1.xaxis.set_major_locator(MultipleLocator(30))
-    ax1.xaxis.set_minor_locator(MultipleLocator(5))
-    ax2.xaxis.set_major_locator(MultipleLocator(30))
-    ax2.xaxis.set_minor_locator(MultipleLocator(5))
-    ax2.set_ylabel('Ozono [ppm]')
-    ax3.xaxis.set_major_locator(MultipleLocator(30))
-    ax3.xaxis.set_minor_locator(MultipleLocator(5))
-    ax3.set_ylabel('Ozono [ppm]')
-    ax4.xaxis.set_major_locator(MultipleLocator(30))
-    ax4.xaxis.set_minor_locator(MultipleLocator(5))
+    ax1.xaxis.set_major_locator(MultipleLocator(150))
+    ax1.xaxis.set_minor_locator(MultipleLocator(30))
+    ax2.xaxis.set_major_locator(MultipleLocator(150))
+    ax2.xaxis.set_minor_locator(MultipleLocator(30))
+    ax2.set_ylabel('Media Ozono [ppm]')
+    ax3.xaxis.set_major_locator(MultipleLocator(150))
+    ax3.xaxis.set_minor_locator(MultipleLocator(30))
+    ax3.set_ylabel('Media Ozono [ppm]')
+    ax4.xaxis.set_major_locator(MultipleLocator(150))
+    ax4.xaxis.set_minor_locator(MultipleLocator(30))
     ax4.set_xlabel('Date')
     fig.set_figheight(7)
     fig.set_figwidth(10)
@@ -323,19 +384,19 @@ def graphFil(data1,amean1,afil1,data2,amean2,afil2,data3,amean3,afil3,data4,amea
 def graphRumori(data1,amean1,afil1,data2,amean2,afil2,data3,amean3,afil3,data4,amean4,afil4,title):
     fig, (ax1,ax2,ax3,ax4) = plt.subplots(4)
     fig.suptitle(title)
-    ax1.plot(data1,amean1-afil1 , color='red')
+    ax1.plot(data1,amean1-afil1 , color='firebrick')
     ax2.plot(data2,amean2-afil2 , color='limegreen')
     ax3.plot(data3,amean3-afil3 , color='midnightblue')
     ax4.plot(data4,amean4-afil4 ,color='cornflowerblue')
-    ax1.xaxis.set_major_locator(MultipleLocator(30))
-    ax1.xaxis.set_minor_locator(MultipleLocator(5))
-    ax2.xaxis.set_major_locator(MultipleLocator(30))
-    ax2.xaxis.set_minor_locator(MultipleLocator(5))
-    ax3.xaxis.set_major_locator(MultipleLocator(30))
-    ax3.xaxis.set_minor_locator(MultipleLocator(5))
-    ax3.set_ylabel('Differenza Ozono originale e filtrato [ppm]')#??
-    ax4.xaxis.set_major_locator(MultipleLocator(30))
-    ax4.xaxis.set_minor_locator(MultipleLocator(5))
+    ax1.xaxis.set_major_locator(MultipleLocator(150))
+    ax1.xaxis.set_minor_locator(MultipleLocator(30))
+    ax2.xaxis.set_major_locator(MultipleLocator(150))
+    ax2.xaxis.set_minor_locator(MultipleLocator(30))
+    ax3.xaxis.set_major_locator(MultipleLocator(150))
+    ax3.xaxis.set_minor_locator(MultipleLocator(30))
+    ax3.set_ylabel('Differenza Ozono originale e filtrato [ppm]')
+    ax4.xaxis.set_major_locator(MultipleLocator(150))
+    ax4.xaxis.set_minor_locator(MultipleLocator(30))
     ax4.set_xlabel('Date')
     fig.set_figheight(7)
     fig.set_figwidth(10)

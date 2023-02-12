@@ -53,10 +53,10 @@ PA24Date , PA24Mean =f.takeArr(staz5Stati[24])
 MD5Date , MD5Mean =f.takeArr(staz5Stati[5])
 
 '''Andamenti temporali'''
-#Decidi se mettere CT1,CT2 ecc.. o lasciare così
-if False:
+
+if True:
     title='Confronto 2 stazioni Connecticut'
-    f.graphInTime2(CT2Date,CT2Mean,CT3Date,CT3Mean,title,'red')
+    f.graphInTime2(CT2Date,CT2Mean,CT3Date,CT3Mean,title,'firebrick')
     title='Confronto 2 stazioni New York'
     f.graphInTime2(NY8Date,NY8Mean,NY9Date,NY9Mean,title,'cyan')
     title='Confronto 2 stazioni della Virginia '
@@ -77,8 +77,14 @@ if False:
 
 '''CORRELAZIONE'''
 
+columns=np.array(['CT2','CT3','VA31','PA13','PA15'])
+tab550=f.correlazione(CT2Mean,CT3Mean,VA31Mean,PA13Mean,PA15Mean,columns,1)
+columns=np.array(['NY8','NY9','PA20','MD5','CT1'])
+tab850=f.correlazione(NY8Mean,NY9Mean,PA20Mean,MD5Mean,CT1Mean,columns,0)
+print(tab550)
+print(tab850)
 
-'''Trasformate di fourier e estrazione di frequenze e max'''
+'''Trasformate di fourier , estrazione di frequenze e max'''
 #trasformata di fourier e freq 2 3 5 8 9 13 15 20 24 29 31 33 34
 coffCT1 , cofFreqCT1 , maxCT1 = f.trFour_freq(CT1Mean)
 coffCT2 , cofFreqCT2 , maxCT2 = f.trFour_freq(CT2Mean)
@@ -102,14 +108,17 @@ modcofPA20 = np.absolute(coffPA20)**2
 modcofVA31 = np.absolute(coffVA31)**2
 
 '''PERIODICITÀ'''
-if False:
+
+if True:
     print('Stazione CT: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(modcofCT1[maxCT1], cofFreqCT1[maxCT1], 1/cofFreqCT1[maxCT1]))
     print('Stazione MD: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(modcofMD5[maxMD5], cofFreqMD5[maxMD5], 1/cofFreqMD5[maxMD5]))
     print('Stazione NY: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(modcofNY9[maxNY9], cofFreqNY9[maxNY9], 1/cofFreqNY9[maxNY9]))
     print('Stazione PA: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(modcofPA20[maxPA20], cofFreqPA20[maxPA20], 1/cofFreqPA20[maxPA20]))
     print('Stazione VA: Massimo : {:f} - Freq {:f} - Periodo: {:f}'.format(modcofVA31[maxVA31], cofFreqVA31[maxVA31], 1/cofFreqVA31[maxVA31]))
 
-if False:
+'''SPETTRI'''
+
+if True:
     title='Spettro di potenza delle stazioni più rilevanti nei 5 stati contigui in funzione della frequenza'
     f.graphSpettri5(coffCT1 , cofFreqCT1,coffMD5 , cofFreqMD5,coffNY9 , cofFreqNY9,coffPA20 , cofFreqPA20, coffVA31 , cofFreqVA31,title)
     title='Spettro di potenza delle stazioni più rilevanti nei 5 stati contigui in funzione del periodo'
@@ -117,41 +126,39 @@ if False:
 
 
 '''FILTRI'''
-#sistema valori di soglia
-filCT1=f.trInv(coffCT1,0.3,CT1Mean)
-filCT2=f.trInv(coffCT2,0.3,CT2Mean)
-filCT3=f.trInv(coffCT3,0.3,CT3Mean)
-filNY8=f.trInv(coffNY8,0.45,NY8Mean)#0.5 sinu
-filNY9=f.trInv(coffNY9,0.45,NY9Mean)
-filPA13=f.trInv(coffPA13,0.25,PA13Mean)
-filPA15=f.trInv(coffPA15,0.2,PA15Mean)
-filPA20=f.trInv(coffPA20,0.3,PA20Mean)
-filPA24=f.trInv(coffPA24,0.25,PA24Mean)
-filVA29=f.trInv(coffVA29,0.1,VA29Mean)#togli una di PA
-filVA31=f.trInv(coffVA31,0.2,VA31Mean)
-filVA33=f.trInv(coffVA33,0.1,VA33Mean)#togli una di VA
-filVA34=f.trInv(coffVA34,0.15,VA34Mean)
-filMD5=f.trInv(coffMD5,0.3,MD5Mean)
+
+filCT1=f.trInv(coffCT1,cofFreqCT1,0.033,CT1Mean)
+filCT2=f.trInv(coffCT2,cofFreqCT2,0.033,CT2Mean)
+filCT3=f.trInv(coffCT3,cofFreqCT3,0.0066,CT3Mean)
+filNY8=f.trInv(coffNY8,cofFreqNY8,0.008,NY8Mean)
+filNY9=f.trInv(coffNY9,cofFreqNY9,0.033,NY9Mean)
+filPA13=f.trInv(coffPA13,cofFreqPA13,0.01,PA13Mean)
+filPA15=f.trInv(coffPA15,cofFreqPA15,0.01,PA15Mean)
+filPA20=f.trInv(coffPA20,cofFreqPA20,0.008,PA20Mean)
+filVA29=f.trInv(coffVA29,cofFreqVA29,0.033,VA29Mean)
+filVA31=f.trInv(coffVA31,cofFreqVA31,0.066,VA31Mean)
+filVA34=f.trInv(coffVA34,cofFreqVA34,0.033,VA34Mean)
+filMD5=f.trInv(coffMD5,cofFreqMD5,0.009,MD5Mean)
 
 '''Dati originali rispetto a filtrati'''
 
-if False:
+if True:
     title='Grafico dati originali e filtrati di CT1,CT2,CT3 e NY8'
     f.graphFil(CT1Date,CT1Mean,filCT1,CT2Date,CT2Mean,filCT2,CT3Date,CT3Mean,filCT3,NY8Date,NY8Mean,filNY8,title)
     
-    title='Grafico dati originali e filtrati di NY9,PA13,PA15 e PA24'
-    f.graphFil(NY9Date,NY9Mean,filNY9,PA13Date,PA13Mean,filPA13,PA15Date,PA15Mean,filPA15,PA24Date,PA24Mean,filPA24,title)
+    title='Grafico dati originali e filtrati di NY9,PA13,PA15 e PA20'
+    f.graphFil(NY9Date,NY9Mean,filNY9,PA13Date,PA13Mean,filPA13,PA15Date,PA15Mean,filPA15,PA20Date,PA20Mean,filPA20,title)
     title='Grafico dati originali e filtrati di VA29,VA31,VA34 e MD5'
     f.graphFil(VA29Date,VA29Mean,filVA29,VA31Date,VA31Mean,filVA31,VA34Date,VA34Mean,filVA34,MD5Date,MD5Mean,filMD5,title)
     
 
 '''RUMORI'''
 
-if False:
+if True:
     title='Grafico andamento della differenza tra dati originali e filtrati delle stazioni CT1 CT2 CT3 e NY8'
     f.graphRumori(CT1Date,CT1Mean,filCT1,CT2Date,CT2Mean,filCT2,CT3Date,CT3Mean,filCT3,NY8Date,NY8Mean,filNY8,title)
-    title='Grafico andamento della differenza tra dati originali e filtrati delle stazioni  NY9 PA13,PA15 e PA24'
-    f.graphRumori(NY9Date,NY9Mean,filNY9,PA13Date,PA13Mean,filPA13,PA15Date,PA15Mean,filPA15,PA24Date,PA24Mean,filPA24,title)
+    title='Grafico andamento della differenza tra dati originali e filtrati delle stazioni  NY9 PA13,PA15 e PA20'
+    f.graphRumori(NY9Date,NY9Mean,filNY9,PA13Date,PA13Mean,filPA13,PA15Date,PA15Mean,filPA15,PA20Date,PA20Mean,filPA20,title)
     title='Grafico andamento della differenza tra dati originali e filtrati delle stazioni VA29,VA31,VA34 e MD5'
     f.graphRumori(VA29Date,VA29Mean,filVA29,VA31Date,VA31Mean,filVA31,VA34Date,VA34Mean,filVA34,MD5Date,MD5Mean,filMD5,title)
     
@@ -163,13 +170,12 @@ if False:
     cofdiffNY9,freqdiffNY9,maxdiffNY9=f.trFour_freq(NY9Mean-filNY9)
     cofdiffPA13,freqdiffPA13,maxdiffPA13=f.trFour_freq(PA13Mean-filPA13)
     cofdiffPA15,freqdiffPA15,maxdiffPA15=f.trFour_freq(PA15Mean-filPA15)
-    cofdiffPA24,freqdiffPA24,maxdiffPA24=f.trFour_freq(PA24Mean-filPA24)
+    cofdiffPA20,freqdiffPA20,maxdiffPA20=f.trFour_freq(PA20Mean-filPA20)
     cofdiffVA29,freqdiffVA29,maxdiffVA29=f.trFour_freq(VA29Mean-filVA29)
     cofdiffVA31,freqdiffVA31,maxdiffVA31=f.trFour_freq(VA31Mean-filVA31)
     cofdiffMD5,freqdiffMD5,maxdiffMD5=f.trFour_freq(MD5Mean-filMD5)
     title='Spettro rumori CT1 CT2 NY8 NY9 e PA13'
     f.graphSpettri5(cofdiffCT1,freqdiffCT1,cofdiffCT2,freqdiffCT2,cofdiffNY8,freqdiffNY8,cofdiffNY9,freqdiffNY9,cofdiffPA13,freqdiffPA13,title)
     title='Spettro rumori PA15 PA24 VA29 VA31 e MD5'
-    f.graphSpettri5(cofdiffPA15,freqdiffPA15,cofdiffPA24,freqdiffPA24,cofdiffVA29,freqdiffVA29,cofdiffVA31,freqdiffVA31,cofdiffMD5,freqdiffMD5,title)
+    f.graphSpettri5(cofdiffPA15,freqdiffPA15,cofdiffPA20,freqdiffPA20,cofdiffVA29,freqdiffVA29,cofdiffVA31,freqdiffVA31,cofdiffMD5,freqdiffMD5,title)
     
-'''In analogia alla luce bianca che è formata dalla sovrapposizione di onde elettromagnetiche di tutte le frequenze visibili. Rumore bianco ha spettro piatto di conseguenza sembrano tutti rumori bianchi '''
